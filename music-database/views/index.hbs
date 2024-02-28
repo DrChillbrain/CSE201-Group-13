@@ -1,0 +1,19 @@
+<div id='mainContent'>
+  <h1>Song Database</h1>
+  <button onclick='showSongs()'>Show Songs</button>
+  <div id='songs'>
+    <h2>Songs</h2>
+    <table class='songTable'>
+      <tr>
+        <td class='columnLabels'>ID:</td>
+        <td class='columnLabels'>Name:</td>
+      </tr>
+      {{#each songs}}
+        <tr>
+          <td class='cell'>{{id}}</td>
+          <td class='cell'>{{name}}</td>
+        </tr>
+      {{/each}}
+    </table>
+  </div>
+</div>
