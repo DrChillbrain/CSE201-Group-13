@@ -1,4 +1,13 @@
 <div id='mainContent'>
+  {{#if user}}
+    Welcome,
+    {{user.username}}.
+    <a href='/users/logout'>Log Out</a>
+    <a href='/users/change-password'>Change Password</a>
+  {{else}}
+    <a href='/users/login'>Log In</a>
+    <a href='/users/register'>Sign Up</a>
+  {{/if}}
   <h1>Song Database</h1>
   <button onclick='showSongs()'>Show Songs</button>
   <div id='songs'>

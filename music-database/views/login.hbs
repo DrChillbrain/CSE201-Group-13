@@ -1,0 +1,31 @@
+<body>
+  <h1><strong>User Login</strong></h1>
+  <a class='btn btn-success mb-2' href='/users/register'>New customer and need
+    to register? Click here!</a>
+  {{#each errors}}
+    <div class='alert alert-danger'>
+      {{this}}
+    </div>
+  {{/each}}
+  {{#if confirmMessage}}
+    <div class='alert alert-success'>
+      {{confirmMessage}}
+    </div>
+  {{/if}}
+  <form method='post'>
+    <div class='form-group'>
+      <label for='username'>Username</label>
+      <input class='form-control' id='username' name='username' />
+    </div>
+    <div class='form-group'>
+      <label for='password'>Password</label>
+      <input
+        class='form-control'
+        id='password'
+        type='password'
+        name='password'
+      />
+    </div>
+    <button class='btn btn-danger' type='submit'>Submit</button>
+  </form>
+</body>
