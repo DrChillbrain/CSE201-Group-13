@@ -9,6 +9,13 @@
     <a href='/users/register'>Sign Up</a>
   {{/if}}
   <h1>Song Database</h1>
+  <form method='post'>
+    <div class='form-group'>
+      <label for='search'>Search</label>
+      <input class='form-control' id='search' name='search' />
+    </div>
+    <button type='submit'>Submit</button>
+  </form>
   <button onclick='showSongs()'>Show Songs</button>
   <div id='songs'>
     <h2>Songs</h2>

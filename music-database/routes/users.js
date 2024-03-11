@@ -153,6 +153,7 @@ router.post('/login', async (req, res) => {
       console.log('cart: ' + req.session.cart);
       console.log('cartcount: ' + req.session.cartCount);
       console.log('nextCardId: ' + req.session.nextCartId);**/
+
       req.session.save(() => res.redirect('/'));
     } else {
       errors.push('Incorrect username/password');
