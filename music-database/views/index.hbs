@@ -17,6 +17,9 @@
     <button type='submit'>Submit</button>
   </form>
   <button onclick='showSongs()'>Show Songs</button>
+  {{#if user}}
+  <a href='/users/playlist' class="btn btn-outline-info">Go to Playlists</a>
+  {{/if}}
   <div id='songs'>
     <h2>Songs</h2>
     <table class='songTable'>

@@ -17,9 +17,12 @@
     "handlebars": "^4.7.8",
     "hbs": "^4.1.2",
     "http-errors": "^1.8.0",
+    "lite": "^4.0.5",
     "morgan": "^1.10.0",
+    "node": "^21.7.1",
     "nodemon": "^2.0.13",
     "session-file-store": "^1.5.0",
+    "sql": "^0.78.0",
     "sqlite": "^4.1.2",
     "sqlite3": "^5.1.6"
   },
