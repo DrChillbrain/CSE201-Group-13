@@ -171,7 +171,7 @@ router.get('/logout', (req, res) => {
 
 router.get('/playlist', async (req, res) => {
   const db = await openDB();
-  const playlistsQuery = 'SELECT NAME FROM USER_PLAYLIST WHERE USERNAME = $1';
+  const playlistsQuery = 'SELECT playlists.playlist_name FROM users_playlists JOIN users ON users_playlists.user_id = users.id JOIN playlists ON users_playlists.playlist_id = playlists.playlist_id WHERE users.username = $1';
 
   const playlistsResults = await db.all(playlistsQuery, [req.session.user]);
 
@@ -182,10 +182,10 @@ router.post('/playlist', async (req, res) => {
   const errors = [];
   const db = await openDB();
 
-  const selectQuery = 'SELECT NAME FROM USERS_PLAYLIST WHERE USERNAME = $1';
+  const selectQuery = 'SELECT playlists.playlist_name FROM users_playlists JOIN users ON users_playlists.user_id = users.id WHERE playlists.playlist_name = $1';
   const data = await db.all(selectQuery, [req.body.addingPlaylist]);
 
-  const auth = await compare(req.body.addingPlaylist, data[0].NAME);
+  const auth = await compare(req.body.addingPlaylist, data[0].playlists.playlists_name);
 
 
   if ((!req.body.addingPlaylist)) {
@@ -197,6 +197,9 @@ router.post('/playlist', async (req, res) => {
     res.render('playlist', { errors });
   }
   else {
+    const insertQuery =
+      'INSERT INTO playlists (playlist_name) VALUES ($1)';
+      const results = db.all(insertQuery, [req.body.addingPlaylist]);
     res.render('playlist', {
       confirmMessage:
         'Playlist has been successfully created.',
