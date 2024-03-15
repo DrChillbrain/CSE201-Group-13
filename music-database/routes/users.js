@@ -171,7 +171,7 @@ router.get('/logout', (req, res) => {
 
 router.get('/playlist', async (req, res) => {
   const db = await openDB();
-  const playlistsQuery = 'SELECT playlists.playlist_name FROM users_playlists JOIN users ON users_playlists.user_id = users.id JOIN playlists ON users_playlists.playlist_id = playlists.playlist_id WHERE users.username = $1';
+  const playlistsQuery = 'SELECT playlists.playlist_name FROM users_playlists JOIN users ON users_playlists.user_id = users.id JOIN playlists ON users_playlists.playlist_id = playlists.id WHERE users.username = $1';
 
   const playlistsResults = await db.all(playlistsQuery, [req.session.user]);
 
@@ -182,17 +182,17 @@ router.post('/playlist', async (req, res) => {
   const errors = [];
   const db = await openDB();
 
-  const selectQuery = 'SELECT playlists.playlist_name FROM users_playlists JOIN users ON users_playlists.user_id = users.id WHERE playlists.playlist_name = $1';
+  const selectQuery = 'SELECT playlists.playlist_name FROM users_playlists JOIN users ON users_playlists.user_id = users.id JOIN playlists ON users_playlists.playlist_id = playlists.id WHERE users.username = $1';
   const data = await db.all(selectQuery, [req.body.addingPlaylist]);
 
-  const auth = await compare(req.body.addingPlaylist, data[0].playlists.playlists_name);
-
+  console.log(req.body.addingPlaylist);
+  console.log(data);
 
   if ((!req.body.addingPlaylist)) {
     errors.push('field is required.');
     res.render('playlist', { errors });
   }
-  else if ((auth)) {
+  else if (data && data.length > 0) {
     errors.push('No duplicate playlists.');
     res.render('playlist', { errors });
   }
