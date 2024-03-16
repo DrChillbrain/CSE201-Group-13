@@ -13,11 +13,15 @@ db.serialize(() => {
   //db.run('');
   db.run('DROP TABLE IF EXISTS songs');
   db.run('DROP TABLE IF EXISTS users');
+  db.run('DROP TABLE IF EXISTS playlists');
   db.run(
     'create TABLE songs(id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(255))'
   );
   db.run(
     'CREATE TABLE users (id integer PRIMARY KEY AUTOINCREMENT, name text,username text UNIQUE, email text UNIQUE, password text)'
+  );
+  db.run(
+    'create TABLE playlists(playlist_id INTEGER PRIMARY KEY AUTOINCREMENT, playlist_name VARCHAR(255), user_id integer REFERENCES users (id))'
   );
   db.run('INSERT INTO songs(name) VALUES ("Country Roads")');
   db.run('INSERT INTO songs(name) VALUES ("Toxic")');
