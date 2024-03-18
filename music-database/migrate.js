@@ -20,7 +20,7 @@ db.serialize(() => {
   db.run(
     'CREATE TABLE users (id integer PRIMARY KEY AUTOINCREMENT, name text,username text UNIQUE, email text UNIQUE, password text)'
   );
-  <<<<<<< HEAD
+ 
   db.run('INSERT INTO songs(name) VALUES ("Country Roads", "Folk", "Bill Danoff")');
   db.run('INSERT INTO songs(name) VALUES ("Toxic", "Pop", "Britney Spears")');
   db.run('INSERT INTO songs(name) VALUES ("Born to Run", "Pop", "Bruce Springsteen")');
