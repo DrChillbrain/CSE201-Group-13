@@ -171,38 +171,48 @@ router.get('/logout', (req, res) => {
 
 router.get('/playlist', async (req, res) => {
   const db = await openDB();
-  const playlistsQuery = 'SELECT NAME FROM USER_PLAYLIST WHERE USERNAME = $1';
-
-  const playlistsResults = await db.all(playlistsQuery, [req.session.user]);
-
-  res.render('playlist', { playlists: playlistsResults, user: req.session.user });
+  const playlistsQuery = 'SELECT * FROM playlists WHERE user_id = $1';
+  //console.log('USER ID IN SESSION: ' + req.session.user.id);
+  const playlistsResults = await db.all(playlistsQuery, [req.session.user.id]);
+  //console.log('PLAYLISTSRESULTS: ' + playlistsResults);
+  res.render('playlist', {
+    playlists: playlistsResults,
+    user: req.session.user,
+  });
 });
 
 router.post('/playlist', async (req, res) => {
   const errors = [];
   const db = await openDB();
 
-  const selectQuery = 'SELECT NAME FROM USERS_PLAYLIST WHERE USERNAME = $1';
-  const data = await db.all(selectQuery, [req.body.addingPlaylist]);
-
-  const auth = await compare(req.body.addingPlaylist, data[0].NAME);
-
-
-  if ((!req.body.addingPlaylist)) {
+  const selectQuery = 'SELECT * FROM playlists WHERE playlist_name = $1';
+  const redundancyCheck = await db.all(selectQuery, [req.body.addingPlaylist]);
+  if (!req.body.addingPlaylist) {
     errors.push('field is required.');
     res.render('playlist', { errors });
-  }
-  else if ((auth)) {
+  } else if (redundancyCheck.length > 0) {
     errors.push('No duplicate playlists.');
     res.render('playlist', { errors });
-  }
-  else {
+  } else {
+    const insertQuery =
+      'INSERT INTO playlists (playlist_name, user_id) VALUES ($1, $2)';
+    const results = db.all(insertQuery, [
+      req.body.addingPlaylist,
+      req.session.user.id,
+    ]);
+    //console.log(results);
+    const playlistsQuery = 'SELECT * FROM playlists WHERE user_id = $1';
+    //console.log('USER ID IN SESSION: ' + req.session.user.id);
+    const playlistsResults = await db.all(playlistsQuery, [
+      req.session.user.id,
+    ]);
+    //console.log('PLAYLISTSRESULTS: ' + playlistsResults);
     res.render('playlist', {
-      confirmMessage:
-        'Playlist has been successfully created.',
+      confirmMessage: 'Playlist has been successfully created.',
+      playlists: playlistsResults,
+      user: req.session.user,
     });
   }
-  
 });
 
 module.exports = router;
