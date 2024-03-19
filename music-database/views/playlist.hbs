@@ -1,8 +1,8 @@
 <body>
-   <form method='post'>
+  <form method='post'>
     <div class='form-group'>
       <label for='addingPlaylist'><h1><strong>Add a Playlist</strong></h1></label>
-      <input class='form-control' id='addingPlaylist' name='addingPlaylist'/>
+      <input class='form-control' id='addingPlaylist' name='addingPlaylist' />
     </div>
     <button type='submit'>Submit</button>
   </form>
@@ -16,8 +16,8 @@
       {{confirmMessage}}
     </div>
   {{/if}}
-  <br>
-    <div id='playlists'>
+  <br />
+  <div id='playlists'>
     <h1><strong>Current Playlists</strong></h1>
     <table class='playlistTable'>
       <tr>
@@ -26,8 +26,8 @@
       </tr>
       {{#each playlists}}
         <tr>
-          <td class='cell'>{{id}}</td>
-          <td class='cell'>{{name}}</td>
+          <td class='cell'>{{playlist_id}}</td>
+          <td class='cell'>{{playlist_name}}</td>
         </tr>
       {{/each}}
     </table>
