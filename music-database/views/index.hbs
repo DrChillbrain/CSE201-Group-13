@@ -11,29 +11,14 @@
   <h1>Song Database</h1>
   <form method='post'>
     <div class='form-group'>
-      <label for='search'>Search by Name</label>
+      <label for='search'>Search</label>
       <input class='form-control' id='search' name='search' />
-      <label>Filter by Genre:</label><br />
-      <input type='checkbox' id='pop' name='pop' value='true' />
-      <label for='pop'>Pop</label>
-      <input type='checkbox' id='rock' name='rock' value='true' />
-      <label for='rock'>Rock</label>
-      <input type='checkbox' id='alternative' name='alternative' value='true' />
-      <label for='alternative'>Alternative</label>
-      <input type='checkbox' id='metal' name='metal' value='true' />
-      <label for='metal'>Metal</label>
-      <input type='checkbox' id='jazz' name='jazz' value='true' />
-      <label for='jazz'>Jazz</label>
-      <input type='checkbox' id='disco' name='disco' value='true' />
-      <label for='disco'>Disco</label>
-      <br />
-      <label for='artistsearch'>Search by Artist</label>
-      <input class='form-control' id='artistsearch' name='artistsearch' />
     </div>
-    <button type='submit'>Search</button>
+    <button type='submit'>Submit</button>
   </form>
+  <button onclick='showSongs()'>Show Songs</button>
   {{#if user}}
-    <a href='/users/playlist' class='btn btn-outline-info'>Go to Playlists</a>
+  <a href='/users/playlist' class="btn btn-outline-info">Go to Playlists</a>
   {{/if}}
   <div id='songs'>
     <h2>Songs</h2>
@@ -41,15 +26,11 @@
       <tr>
         <td class='columnLabels'>ID:</td>
         <td class='columnLabels'>Name:</td>
-        <td class='columnLabels'>Genre:</td>
-        <td class='columnLabels'>Artist:</td>
       </tr>
       {{#each songs}}
         <tr>
           <td class='cell'>{{id}}</td>
           <td class='cell'>{{name}}</td>
-          <td class='cell'>{{genre}}</td>
-          <td class='cell'>{{artist}}</td>
         </tr>
       {{/each}}
     </table>
