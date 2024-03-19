@@ -171,41 +171,41 @@ router.get('/logout', (req, res) => {
 
 router.get('/playlist', async (req, res) => {
   const db = await openDB();
-  const playlistsQuery = 'SELECT playlists.playlist_name FROM users_playlists JOIN users ON users_playlists.user_id = users.id JOIN playlists ON users_playlists.playlist_id = playlists.id WHERE users.username = $1';
+  const playlistsQuery =
+    'SELECT playlists.playlist_name FROM users_playlists JOIN users ON users_playlists.user_id = users.id JOIN playlists ON users_playlists.playlist_id = playlists.id WHERE users.username = $1';
 
   const playlistsResults = await db.all(playlistsQuery, [req.session.user]);
 
-  res.render('playlist', { playlists: playlistsResults, user: req.session.user });
+  res.render('playlist', {
+    playlists: playlistsResults,
+    user: req.session.user,
+  });
 });
 
 router.post('/playlist', async (req, res) => {
   const errors = [];
   const db = await openDB();
 
-  const selectQuery = 'SELECT playlists.playlist_name FROM users_playlists JOIN users ON users_playlists.user_id = users.id JOIN playlists ON users_playlists.playlist_id = playlists.id WHERE users.username = $1';
+  const selectQuery =
+    'SELECT playlists.playlist_name FROM users_playlists JOIN users ON users_playlists.user_id = users.id JOIN playlists ON users_playlists.playlist_id = playlists.id WHERE users.username = $1';
   const data = await db.all(selectQuery, [req.body.addingPlaylist]);
 
   console.log(req.body.addingPlaylist);
   console.log(data);
 
-  if ((!req.body.addingPlaylist)) {
+  if (!req.body.addingPlaylist) {
     errors.push('field is required.');
     res.render('playlist', { errors });
-  }
-  else if (data && data.length > 0) {
+  } else if (data && data.length > 0) {
     errors.push('No duplicate playlists.');
     res.render('playlist', { errors });
-  }
-  else {
-    const insertQuery =
-      'INSERT INTO playlists (playlist_name) VALUES ($1)';
-      const results = db.all(insertQuery, [req.body.addingPlaylist]);
+  } else {
+    const insertQuery = 'INSERT INTO playlists (playlist_name) VALUES ($1)';
+    const results = db.all(insertQuery, [req.body.addingPlaylist]);
     res.render('playlist', {
-      confirmMessage:
-        'Playlist has been successfully created.',
+      confirmMessage: 'Playlist has been successfully created.',
     });
   }
-  
 });
 
 module.exports = router;
