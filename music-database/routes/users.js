@@ -186,13 +186,28 @@ router.post('/playlist', async (req, res) => {
   const db = await openDB();
 
   const selectQuery = 'SELECT * FROM playlists WHERE playlist_name = $1';
+  const playlistsQuery = 'SELECT * FROM playlists WHERE user_id = $1';
   const redundancyCheck = await db.all(selectQuery, [req.body.addingPlaylist]);
   if (!req.body.addingPlaylist) {
     errors.push('field is required.');
-    res.render('playlist', { errors });
+    const playlistsResults = await db.all(playlistsQuery, [
+      req.session.user.id,
+    ]);
+    res.render('playlist', {
+      errors: errors,
+      playlists: playlistsResults,
+      user: req.session.user,
+    });
   } else if (redundancyCheck.length > 0) {
+    const playlistsResults = await db.all(playlistsQuery, [
+      req.session.user.id,
+    ]);
     errors.push('No duplicate playlists.');
-    res.render('playlist', { errors });
+    res.render('playlist', {
+      errors: errors,
+      playlists: playlistsResults,
+      user: req.session.user,
+    });
   } else {
     const insertQuery =
       'INSERT INTO playlists (playlist_name, user_id) VALUES ($1, $2)';
@@ -201,7 +216,6 @@ router.post('/playlist', async (req, res) => {
       req.session.user.id,
     ]);
     //console.log(results);
-    const playlistsQuery = 'SELECT * FROM playlists WHERE user_id = $1';
     //console.log('USER ID IN SESSION: ' + req.session.user.id);
     const playlistsResults = await db.all(playlistsQuery, [
       req.session.user.id,
