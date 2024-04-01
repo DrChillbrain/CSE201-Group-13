@@ -8,6 +8,11 @@
     <a href='/users/login'>Log In</a>
     <a href='/users/register'>Sign Up</a>
   {{/if}}
+  {{#each errors}}
+    <div class='alert alert-danger'>
+      {{this}}
+    </div>
+  {{/each}}
   <h1>Song Database</h1>
   <form method='post'>
     <div class='form-group'>

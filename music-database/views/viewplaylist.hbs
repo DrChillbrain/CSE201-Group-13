@@ -1,0 +1,14 @@
+<body>
+  <h1><strong>Playlist</strong></h1>
+  {{#each errors}}
+    <div class='alert alert-danger'>
+      {{this}}
+    </div>
+  {{/each}}
+  {{#if playlistID}}
+    <p>
+      Currently showing playlist with ID:
+      {{playlistID}}.
+    </p>
+  {{/if}}
+</body>
