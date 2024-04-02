@@ -3,7 +3,7 @@
   <form method='post'>
     <div class='form-group'>
       <label for='addingPlaylist'><h1><strong>Add a Playlist</strong></h1></label>
-      <input class='form-control' id='addingPlaylist' name='addingPlaylist' />
+      <input class='form-control' id='addingPlaylist' name='addingPlaylist' description='addingPlaylist'/>
     </div>
     <button type='submit'>Submit</button>
   </form>
@@ -24,11 +24,13 @@
       <tr>
         <td class='columnLabels'>ID:</td>
         <td class='columnLabels'>Name:</td>
+        <td class='columnLabels'>Description</td>
       </tr>
       {{#each playlists}}
         <tr>
           <td class='cell'>{{playlist_id}}</td>
           <td class='cell'>{{playlist_name}}</td>
+          <td class="cell">{{playlist_description}}</td>
         </tr>
       {{/each}}
     </table>

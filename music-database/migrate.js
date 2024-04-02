@@ -21,7 +21,7 @@ db.serialize(() => {
     'CREATE TABLE users (id integer PRIMARY KEY AUTOINCREMENT, name text,username text UNIQUE, email text UNIQUE, password text)'
   );
   db.run(
-    'create TABLE playlists(playlist_id INTEGER PRIMARY KEY AUTOINCREMENT, playlist_name VARCHAR(255), user_id integer REFERENCES users (id))'
+    'create TABLE playlists(playlist_id INTEGER PRIMARY KEY AUTOINCREMENT, playlist_name VARCHAR(255), playlist_description VARCHAR(255), user_id integer REFERENCES users (id))'
   );
 
   db.run(
