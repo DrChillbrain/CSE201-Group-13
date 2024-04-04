@@ -12,17 +12,15 @@ async function openDB() {
 
 const router = express.Router();
 
-router.get('/search', async (req, res) => {
+router.get('/', async (req, res) => {
   if (req.session.user) {
     res.render('index', {
       user: req.session.user,
     });
   } else {
-    res.render('index', {
-    });
+    res.render('index', {});
   }
 });
- 
 
 router.get('/search', async (req, res) => {
   const db = await openDB();
