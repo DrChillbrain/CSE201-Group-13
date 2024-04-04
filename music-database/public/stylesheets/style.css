@@ -1,25 +1,163 @@
-#songs {
-  display: block;
-  background-color: lightgray;
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-image: url('background.jpg'); /* Replace 'background.jpg' with the path to your background image */
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background to the container */
 }
 
 h1 {
-  background-color: white;
-  color: #007bff;
-  text-align: left;
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #333;
 }
 
-button {
+.btn {
+  display: inline-block;
   padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: white;
+  background-color: #1db954;
+  color: #fff;
+  text-decoration: none;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-h2 {
-  color: #007bff;
+.btn:hover {
+  background-color: #168f3d;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.alert {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+}
+
+/* Specific styling for different sections */
+#mainContent {
+  background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background to the main content */
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#loginContent, #signupContent {
+  background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background to the login and signup content */
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#loginContent h1, #signupContent h1 {
+  margin-bottom: 30px;
+}
+
+#mainContent h1 {
+  font-size: 36px;
+  margin-bottom: 30px;
+}
+
+#mainContent .form-control {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  color: #333;
+}
+
+#mainContent button {
+  padding: 12px 24px;
+  background-color: #1db954;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#mainContent button:hover {
+  background-color: #168f3d;
+}
+
+#songs {
+  margin-top: 40px;
+}
+
+.songTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.songTable th, .songTable td {
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.songTable th {
+  background-color: #f4f4f4;
+  color: #333;
+  font-weight: bold;
+}
+
+.songTable tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+#playlists {
+  margin-top: 40px;
+}
+
+.playlistTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.playlistTable th, .playlistTable td {
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.playlistTable th {
+  background-color: #f4f4f4;
+  color: #333;
+  font-weight: bold;
+}
+
+.playlistTable tr:nth-child(even) {
+  background-color: #fafafa;
 }

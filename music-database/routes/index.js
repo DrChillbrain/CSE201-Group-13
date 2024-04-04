@@ -12,17 +12,29 @@ async function openDB() {
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-  const db = await openDB();
-  const songsQuery = 'SELECT * FROM songs';
-  const songResults = await db.all(songsQuery, []);
+router.get('/search', async (req, res) => {
   if (req.session.user) {
     res.render('index', {
-      songs: songResults,
       user: req.session.user,
     });
   } else {
     res.render('index', {
+    });
+  }
+});
+ 
+
+router.get('/search', async (req, res) => {
+  const db = await openDB();
+  const songsQuery = 'SELECT * FROM songs';
+  const songResults = await db.all(songsQuery, []);
+  if (req.session.user) {
+    res.render('songsearch', {
+      songs: songResults,
+      user: req.session.user,
+    });
+  } else {
+    res.render('songsearch', {
       songs: songResults,
     });
   }
