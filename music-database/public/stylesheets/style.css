@@ -161,3 +161,37 @@ h1 {
 .playlistTable tr:nth-child(even) {
   background-color: #fafafa;
 }
+
+.taskbar {
+  background-color: #333;
+  padding: 10px 0;
+}
+
+.task {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+/* Description styling */
+.description {
+  max-width: 800px; /* Adjust the max-width to your preference */
+  margin: 50px auto; /* Center the description vertically */
+  padding: 0 20px;
+  color: #333; /* Change text color */
+  text-align: center; /* Center align the text */
+}
+
+.description p {
+  font-size: 18px;
+  line-height: 1.5;
+}
