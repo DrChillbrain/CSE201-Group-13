@@ -23,6 +23,9 @@ db.serialize(() => {
   db.run(
     'create TABLE playlists(playlist_id INTEGER PRIMARY KEY AUTOINCREMENT, playlist_name VARCHAR(255), playlist_description VARCHAR(255), user_id integer REFERENCES users (id))'
   );
+  db.run(
+    'create TABLE playlist_songs(id INTEGER PRIMARY KEY AUTOINCREMENT, song_id integer REFERENCES songs (id), playlist_id integer REFERENCES playlists (playlist_id))'
+  );
 
   db.run(
     'INSERT INTO songs(name, genre, artist) VALUES ("Country Roads", "Folk", "Bill Danoff")'

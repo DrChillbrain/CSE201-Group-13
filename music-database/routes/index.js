@@ -31,7 +31,6 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   //res.json({ requestBody: req.body });
   var genreFilters = [];
-  var artistFilter;
   const searchQuery = req.body.search;
   if (req.body.rock == 'true') {
     genreFilters.push('Rock');
