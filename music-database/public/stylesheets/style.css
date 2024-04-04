@@ -162,6 +162,15 @@ h1 {
   background-color: #fafafa;
 }
 
+/* Title styling */
+h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  margin-left: 20px; /* Move the title left */
+  color: #333; /* Change text color */
+}
+
+/* Taskbar styling */
 .taskbar {
   background-color: #333;
   padding: 10px 0;
