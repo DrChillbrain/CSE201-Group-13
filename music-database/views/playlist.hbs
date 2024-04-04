@@ -1,44 +1,36 @@
-<html>
-  <body>
-    <a href='/' class='btn btn-outline-info'>Return to Home</a>
-    <form method='post'>
-      <div class='form-group'>
-        <label for='addingPlaylist'><h1><strong>Add a Playlist</strong></h1></label>
-        <input class='form-control' id='addingPlaylist' name='addingPlaylist' />
-      </div>
-      <button type='submit'>Submit</button>
-    </form>
-    {{#each errors}}
-      <div class='alert alert-danger'>
-        {{this}}
-      </div>
-    {{/each}}
-    {{#if confirmMessage}}
-      <div class='alert alert-success'>
-        {{confirmMessage}}
-      </div>
-    {{/if}}
-    <br />
-    <div id='playlists'>
-      <h1><strong>Current Playlists</strong></h1>
-      <table class='playlistTable'>
-        <tr>
-          <td class='columnLabels'>ID:</td>
-          <td class='columnLabels'>Name:</td>
-        </tr>
-        {{#each playlists}}
-          <tr>
-            <td class='cell'>{{playlist_id}}</td>
-            <td class='cell'>{{playlist_name}}</td>
-            <td class='cell'>
-              <a
-                href='/users/viewplaylist/{{playlist_id}}'
-                class='btn btn-outline-info'
-              >View Playlist</a>
-            </td>
-          </tr>
-        {{/each}}
-      </table>
+<body>
+  <a href='/' class='btn btn-outline-info'>Return to Home</a>
+  <form method='post'>
+    <div class='form-group'>
+      <label for='addingPlaylist'><h1><strong>Add a Playlist</strong></h1></label>
+      <input class='form-control' id='addingPlaylist' name='addingPlaylist' />
     </div>
-  </body>
-</html>
+    <button type='submit'>Submit</button>
+  </form>
+  {{#each errors}}
+    <div class='alert alert-danger'>
+      {{this}}
+    </div>
+  {{/each}}
+  {{#if confirmMessage}}
+    <div class='alert alert-success'>
+      {{confirmMessage}}
+    </div>
+  {{/if}}
+  <br />
+  <div id='playlists'>
+    <h1><strong>Current Playlists</strong></h1>
+    <table class='playlistTable'>
+      <tr>
+        <td class='columnLabels'>ID:</td>
+        <td class='columnLabels'>Name:</td>
+      </tr>
+      {{#each playlists}}
+        <tr>
+          <td class='cell'>{{playlist_id}}</td>
+          <td class='cell'>{{playlist_name}}</td>
+        </tr>
+      {{/each}}
+    </table>
+  </div>
+</body>

@@ -210,10 +210,11 @@ router.post('/playlist', async (req, res) => {
     });
   } else {
     const insertQuery =
-      'INSERT INTO playlists (playlist_name, user_id) VALUES ($1, $2)';
+      'INSERT INTO playlists (playlist_name, user_id, playlist_description) VALUES ($1, $2, $3)'; //added here
     const results = db.all(insertQuery, [
       req.body.addingPlaylist,
       req.session.user.id,
+      req.body.description,//added here
     ]);
     //console.log(results);
     //console.log('USER ID IN SESSION: ' + req.session.user.id);
