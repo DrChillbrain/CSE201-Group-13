@@ -6,6 +6,10 @@
     </div>
   {{/each}}
   {{#if playlistID}}
+    <a
+      href='/users/editplaylist/{{playlistID}}'
+      class='btn btn-outline-info'
+    >Edit Playlist</a>
     <p>
       Currently showing playlist with ID:
       {{playlistID}}.

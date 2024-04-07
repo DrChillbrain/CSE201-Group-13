@@ -214,7 +214,7 @@ router.post('/playlist', async (req, res) => {
     const results = db.all(insertQuery, [
       req.body.addingPlaylist,
       req.session.user.id,
-      req.body.description,//added here
+      req.body.description, //added here
     ]);
     //console.log(results);
     //console.log('USER ID IN SESSION: ' + req.session.user.id);
@@ -244,6 +244,86 @@ router.get('/viewplaylist/:id', async (req, res) => {
     }
   } else {
     res.redirect('/users/login');
+  }
+});
+
+router.get('/editplaylist/:id', async (req, res) => {
+  console.log("We're in the edit playlist route.");
+  if (req.session.user) {
+    const db = await openDB();
+    const playlistQuery = 'SELECT * FROM playlists WHERE playlist_id = $1';
+    const playlistResults = await db.all(playlistQuery, [req.params.id]);
+    const songsQuery = 'SELECT * FROM songs';
+    const songResults = await db.all(songsQuery);
+    if (playlistResults[0].user_id == req.session.user.id) {
+      const idToPass = parseInt(req.params.id, 10);
+      res.render('editplaylist', {
+        playlistID: idToPass,
+        songResults: songResults,
+      });
+    } else {
+      res.redirect('/');
+    }
+  } else {
+    res.redirect('/');
+  }
+});
+
+router.post('/editplaylist/:id', async (req, res) => {
+  if (req.session.user) {
+    const db = await openDB();
+    const playlistQuery = 'SELECT * FROM playlists WHERE playlist_id = $1';
+    const playlistResults = await db.all(playlistQuery, [req.params.id]);
+    if (playlistResults[0].user_id == req.session.user.id) {
+      //res.json({ requestBody: req.body });
+      var genreFilters = [];
+      const searchQuery = req.body.search;
+      if (req.body.rock == 'true') {
+        genreFilters.push('Rock');
+      }
+      if (req.body.pop == 'true') {
+        genreFilters.push('Pop');
+      }
+      if (req.body.alternative == 'true') {
+        genreFilters.push('Alternative');
+      }
+      if (req.body.metal == 'true') {
+        genreFilters.push('Metal');
+      }
+      if (req.body.jazz == 'true') {
+        genreFilters.push('Jazz');
+      }
+      if (req.body.disco == 'true') {
+        genreFilters.push('Disco');
+      }
+      var genreFilterString = ' AND (';
+      for (var i = 0; i < genreFilters.length; i++) {
+        genreFilterString += "genre LIKE '%" + genreFilters[i] + "%'";
+        if (i < genreFilters.length - 1) {
+          genreFilterString += ' OR ';
+        }
+      }
+      genreFilterString += ')';
+      const db = await openDB();
+      let songsQuery =
+        "SELECT * FROM songs WHERE name LIKE '%" + searchQuery + "%'";
+      if (genreFilters.length > 0) {
+        songsQuery += genreFilterString;
+      }
+      if (req.body.artistsearch.length > 0) {
+        songsQuery += " AND artist LIKE '%" + req.body.artistsearch + "%'";
+      }
+      const data = await db.all(songsQuery, []);
+      const idToPass = parseInt(req.params.id, 10);
+      res.render('editplaylist', {
+        songs: data,
+        playlistID: idToPass,
+      });
+    } else {
+      res.redirect('/');
+    }
+  } else {
+    res.redirect('/');
   }
 });
 
