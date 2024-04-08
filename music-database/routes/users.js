@@ -137,13 +137,14 @@ router.post('/login', async (req, res) => {
   const selectQuery = 'SELECT * FROM users WHERE username = $1';
   const data = await db.all(selectQuery, [req.body.username]);
 
+  console.log(req.session.user.name);
+
   if (data.length === 1) {
     const auth = await bcrypt.compare(req.body.password, data[0].password);
 
     if (auth) {
       // eslint-disable-next-line prefer-destructuring
       req.session.user = data[0];
-      console.log(req.session.user);
 
       console.log('This is where we initialize the users session info.');
 
@@ -245,6 +246,46 @@ router.get('/viewplaylist/:id', async (req, res) => {
   } else {
     res.redirect('/users/login');
   }
+});
+
+router.get('/accountSettings', async (req, res) => {
+
+  const db = await openDB();
+  const userQuery = 'SELECT * FROM users WHERE id = $1';
+  const userResults = await db.all(playlistQuery, [req.session.user.id]);
+
+  const users = userResults.map(user => ({
+    id: user.id,
+    name: user.name,
+    username: user.username,
+    email: user.email,
+    password: user.password,
+    image: user.profile_picture
+  }));
+
+  let profilePic = '';
+  if(users.image == 1)
+  {
+    profilePic = 'profilePicture1.jpg';
+  }
+  else if(users.image == 2)
+  {
+    profilePic = 'profilePicture2.jpg';
+  }
+  else if(users.image == 3)
+  {
+    profilePic = 'profilePicture3.jpg';
+  }
+  else
+  {
+    profilePic = 'profilePicture4.jpg';
+  }
+
+  res.render('accountSettings', { 
+    name: req.session.user.name,
+    users: users, // Passing the labeled data
+    picture: profilePic
+  });
 });
 
 router.get('/editplaylist/:id', async (req, res) => {
