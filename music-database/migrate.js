@@ -14,6 +14,7 @@ db.serialize(() => {
   db.run('DROP TABLE IF EXISTS songs');
   db.run('DROP TABLE IF EXISTS users');
   db.run('DROP TABLE IF EXISTS playlists');
+  db.run('DROP TABLE IF EXISTS playlist_songs');
   db.run(
     'create TABLE songs(id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(255), genre VARCHAR(255), artist VARCHAR(255))'
   );
