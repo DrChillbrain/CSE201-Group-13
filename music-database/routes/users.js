@@ -236,9 +236,33 @@ router.get('/viewplaylist/:id', async (req, res) => {
     const db = await openDB();
     const playlistQuery = 'SELECT * FROM playlists WHERE playlist_id = $1';
     const playlistResults = await db.all(playlistQuery, [req.params.id]);
+
     if (playlistResults[0].user_id == req.session.user.id) {
+      //code for rendering songs already in the playlist
+      const playlistSongQuery =
+        'SELECT * FROM playlist_songs WHERE playlist_id = $1';
+      const playlistSongResults = await db.all(playlistSongQuery, [
+        req.params.id,
+      ]);
+      let songResult, songQuery;
+      let songList = [];
+      for (i = 0; i < playlistSongResults.length; i++) {
+        console.log(playlistSongResults[i].song_id);
+        songQuery = 'SELECT * FROM songs WHERE id = $1';
+        songResult = await db.all(songQuery, [playlistSongResults[i].song_id]);
+        songList.push({
+          id: playlistSongResults[0].id,
+          name: songResult[0].name,
+          genre: songResult[0].genre,
+          artist: songResult[0].artist,
+        });
+      }
       const idToPass = parseInt(req.params.id, 10);
-      res.render('viewplaylist', { playlistID: idToPass });
+      res.render('viewplaylist', {
+        songsInList: songList,
+        playlistName: playlistResults[0].playlist_name,
+        playlistID: idToPass,
+      });
     } else {
       res.redirect('/');
     }
@@ -254,12 +278,34 @@ router.get('/editplaylist/:id', async (req, res) => {
     const playlistQuery = 'SELECT * FROM playlists WHERE playlist_id = $1';
     const playlistResults = await db.all(playlistQuery, [req.params.id]);
     const songsQuery = 'SELECT * FROM songs';
-    const songResults = await db.all(songsQuery);
+    const data = await db.all(songsQuery);
     if (playlistResults[0].user_id == req.session.user.id) {
+      //code for rendering songs already in the playlist
+      const playlistSongQuery =
+        'SELECT * FROM playlist_songs WHERE playlist_id = $1';
+      const playlistSongResults = await db.all(playlistSongQuery, [
+        req.params.id,
+      ]);
+      let songResult, songQuery;
+      let songList = [];
+      for (i = 0; i < playlistSongResults.length; i++) {
+        console.log(playlistSongResults[i].song_id);
+        songQuery = 'SELECT * FROM songs WHERE id = $1';
+        songResult = await db.all(songQuery, [playlistSongResults[i].song_id]);
+        songList.push({
+          id: playlistSongResults[0].id,
+          name: songResult[0].name,
+          genre: songResult[0].genre,
+          artist: songResult[0].artist,
+        });
+      }
+
       const idToPass = parseInt(req.params.id, 10);
       res.render('editplaylist', {
+        songs: data,
+        songsInList: songList,
+        playlistName: playlistResults[0].playlist_name,
         playlistID: idToPass,
-        songResults: songResults,
       });
     } else {
       res.redirect('/');
@@ -270,11 +316,31 @@ router.get('/editplaylist/:id', async (req, res) => {
 });
 
 router.post('/editplaylist/:id', async (req, res) => {
+  const db = await openDB();
   if (req.session.user) {
-    const db = await openDB();
     const playlistQuery = 'SELECT * FROM playlists WHERE playlist_id = $1';
     const playlistResults = await db.all(playlistQuery, [req.params.id]);
     if (playlistResults[0].user_id == req.session.user.id) {
+      //code for rendering songs already in the playlist
+      const playlistSongQuery =
+        'SELECT * FROM playlist_songs WHERE playlist_id = $1';
+      const playlistSongResults = await db.all(playlistSongQuery, [
+        req.params.id,
+      ]);
+      let songResult, songQuery;
+      let songList = [];
+      for (i = 0; i < playlistSongResults.length; i++) {
+        console.log(playlistSongResults[i].song_id);
+        songQuery = 'SELECT * FROM songs WHERE id = $1';
+        songResult = await db.all(songQuery, [playlistSongResults[i].song_id]);
+        songList.push({
+          id: playlistSongResults[0].id,
+          name: songResult[0].name,
+          genre: songResult[0].genre,
+          artist: songResult[0].artist,
+        });
+      }
+
       //res.json({ requestBody: req.body });
       var genreFilters = [];
       const searchQuery = req.body.search;
@@ -304,7 +370,6 @@ router.post('/editplaylist/:id', async (req, res) => {
         }
       }
       genreFilterString += ')';
-      const db = await openDB();
       let songsQuery =
         "SELECT * FROM songs WHERE name LIKE '%" + searchQuery + "%'";
       if (genreFilters.length > 0) {
@@ -315,8 +380,11 @@ router.post('/editplaylist/:id', async (req, res) => {
       }
       const data = await db.all(songsQuery, []);
       const idToPass = parseInt(req.params.id, 10);
+      console.log('songList length: ' + songList.length);
       res.render('editplaylist', {
         songs: data,
+        songsInList: songList,
+        playlistName: playlistResults[0].playlist_name,
         playlistID: idToPass,
       });
     } else {
@@ -326,5 +394,53 @@ router.post('/editplaylist/:id', async (req, res) => {
     res.redirect('/');
   }
 });
+
+router.get('/addtoplaylist/:playlistid/:songid', async (req, res) => {
+  if (req.session.user) {
+    const db = await openDB();
+    const playlistQuery = 'SELECT * FROM playlists WHERE playlist_id = $1';
+    const playlistResults = await db.all(playlistQuery, [
+      req.params.playlistid,
+    ]);
+    if (playlistResults[0].user_id == req.session.user.id) {
+      const playlistSongsInsertQuery =
+        'INSERT INTO playlist_songs (song_id, playlist_id) VALUES ($1, $2)';
+      const results = db.all(playlistSongsInsertQuery, [
+        req.params.songid,
+        req.params.playlistid,
+      ]);
+      res.redirect('/users/editplaylist/' + req.params.playlistid);
+    } else {
+      res.redirect('/');
+    }
+  } else {
+    res.redirect('/');
+  }
+});
+
+router.get(
+  '/removefromplaylist/:playlistid/:playlistsongid',
+  async (req, res) => {
+    if (req.session.user) {
+      const db = await openDB();
+      const playlistQuery = 'SELECT * FROM playlists WHERE playlist_id = $1';
+      const playlistResults = await db.all(playlistQuery, [
+        req.params.playlistid,
+      ]);
+      if (playlistResults[0].user_id == req.session.user.id) {
+        const playlistSongsDeleteQuery =
+          'DELETE FROM playlist_songs WHERE id = ($1)';
+        const results = db.all(playlistSongsDeleteQuery, [
+          req.params.playlistsongid,
+        ]);
+        res.redirect('/users/editplaylist/' + req.params.playlistid);
+      } else {
+        res.redirect('/');
+      }
+    } else {
+      res.redirect('/');
+    }
+  }
+);
 
 module.exports = router;
