@@ -186,37 +186,23 @@ router.post('/playlist', async (req, res) => {
   const db = await openDB();
 
   const selectQuery = 'SELECT * FROM playlists WHERE playlist_name = $1';
-  const playlistsQuery = 'SELECT * FROM playlists WHERE user_id = $1';
   const redundancyCheck = await db.all(selectQuery, [req.body.addingPlaylist]);
   if (!req.body.addingPlaylist) {
     errors.push('field is required.');
-    const playlistsResults = await db.all(playlistsQuery, [
-      req.session.user.id,
-    ]);
-    res.render('playlist', {
-      errors: errors,
-      playlists: playlistsResults,
-      user: req.session.user,
-    });
+    res.render('playlist', { errors });
   } else if (redundancyCheck.length > 0) {
-    const playlistsResults = await db.all(playlistsQuery, [
-      req.session.user.id,
-    ]);
     errors.push('No duplicate playlists.');
-    res.render('playlist', {
-      errors: errors,
-      playlists: playlistsResults,
-      user: req.session.user,
-    });
+    res.render('playlist', { errors });
   } else {
     const insertQuery =
-      'INSERT INTO playlists (playlist_name, user_id, playlist_description) VALUES ($1, $2, $3)'; //added here
+      'INSERT INTO playlists (playlist_name, user_id, playlist_description) VALUES ($1, $2, $3)';
     const results = db.all(insertQuery, [
       req.body.addingPlaylist,
       req.session.user.id,
-      req.body.description,//added here
+      req.body.description,
     ]);
     //console.log(results);
+    const playlistsQuery = 'SELECT * FROM playlists WHERE user_id = $1';
     //console.log('USER ID IN SESSION: ' + req.session.user.id);
     const playlistsResults = await db.all(playlistsQuery, [
       req.session.user.id,
@@ -227,23 +213,6 @@ router.post('/playlist', async (req, res) => {
       playlists: playlistsResults,
       user: req.session.user,
     });
-  }
-});
-
-router.get('/viewplaylist/:id', async (req, res) => {
-  console.log("We're in this view route.");
-  if (req.session.user) {
-    const db = await openDB();
-    const playlistQuery = 'SELECT * FROM playlists WHERE playlist_id = $1';
-    const playlistResults = await db.all(playlistQuery, [req.params.id]);
-    if (playlistResults[0].user_id == req.session.user.id) {
-      const idToPass = parseInt(req.params.id, 10);
-      res.render('viewplaylist', { playlistID: idToPass });
-    } else {
-      res.redirect('/');
-    }
-  } else {
-    res.redirect('/users/login');
   }
 });
 
