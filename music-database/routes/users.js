@@ -137,13 +137,14 @@ router.post('/login', async (req, res) => {
   const selectQuery = 'SELECT * FROM users WHERE username = $1';
   const data = await db.all(selectQuery, [req.body.username]);
 
+  //console.log(req.session.user.name);
+
   if (data.length === 1) {
     const auth = await bcrypt.compare(req.body.password, data[0].password);
 
     if (auth) {
       // eslint-disable-next-line prefer-destructuring
       req.session.user = data[0];
-      console.log(req.session.user);
 
       console.log('This is where we initialize the users session info.');
 
@@ -199,7 +200,7 @@ router.post('/playlist', async (req, res) => {
     const results = db.all(insertQuery, [
       req.body.addingPlaylist,
       req.session.user.id,
-      req.body.description,
+      req.body.description,//added here
     ]);
     //console.log(results);
     const playlistsQuery = 'SELECT * FROM playlists WHERE user_id = $1';
@@ -213,6 +214,23 @@ router.post('/playlist', async (req, res) => {
       playlists: playlistsResults,
       user: req.session.user,
     });
+  }
+});
+
+router.get('/viewplaylist/:id', async (req, res) => {
+  console.log("We're in this view route.");
+  if (req.session.user) {
+    const db = await openDB();
+    const playlistQuery = 'SELECT * FROM playlists WHERE playlist_id = $1';
+    const playlistResults = await db.all(playlistQuery, [req.params.id]);
+    if (playlistResults[0].user_id == req.session.user.id) {
+      const idToPass = parseInt(req.params.id, 10);
+      res.render('viewplaylist', { playlistID: idToPass });
+    } else {
+      res.redirect('/');
+    }
+  } else {
+    res.redirect('/users/login');
   }
 });
 

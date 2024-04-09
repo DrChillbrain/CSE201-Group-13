@@ -1,14 +1,28 @@
 <body>
-  <h1><strong>Playlist</strong></h1>
-  {{#each errors}}
-    <div class='alert alert-danger'>
-      {{this}}
-    </div>
-  {{/each}}
   {{#if playlistID}}
-    <p>
-      Currently showing playlist with ID:
-      {{playlistID}}.
-    </p>
+    <h1><strong>{{playlistName}}</strong></h1>
+    {{#each errors}}
+      <div class='alert alert-danger'>
+        {{this}}
+      </div>
+    {{/each}}
+    <a
+      href='/users/editplaylist/{{playlistID}}'
+      class='btn btn-outline-info'
+    >Edit Playlist</a>
+    <table class='songTable'>
+      <tr>
+        <td class='columnLabels'>Name:</td>
+        <td class='columnLabels'>Genre:</td>
+        <td class='columnLabels'>Artist:</td>
+      </tr>
+      {{#each songsInList}}
+        <tr>
+          <td class='cell'>{{name}}</td>
+          <td class='cell'>{{genre}}</td>
+          <td class='cell'>{{artist}}</td>
+        </tr>
+      {{/each}}
+    </table>
   {{/if}}
 </body>
