@@ -274,33 +274,25 @@ router.get('/viewplaylist/:id', async (req, res) => {
 
 router.get('/accountSettings', async (req, res) => {
   const db = await openDB();
-  const userQuery = 'SELECT * FROM users WHERE id = $1';
-  const userResults = await db.all(playlistQuery, [req.session.user.id]);
-
-  const users = userResults.map((user) => ({
-    id: user.id,
-    name: user.name,
-    username: user.username,
-    email: user.email,
-    password: user.password,
-    image: user.profile_picture,
-  }));
+  const userQuery = 'SELECT name, username, email FROM users WHERE id = $1';
+  const userResults = await db.all(userQuery, [req.session.user.id]);
+  const userQueryPic = 'SELECT profile_picture FROM users WHERE id = $1';
+  const userResultsPic = await db.all(userQueryPic, [req.session.user.id]);
 
   let profilePic = '';
-  if (users.image == 1) {
+  if (userResultsPic[0].profile_picture == 1) {
     profilePic = 'profilePicture1.jpg';
-  } else if (users.image == 2) {
+  } else if (userResultsPic[0].profile_picture == 2) {
     profilePic = 'profilePicture2.jpg';
-  } else if (users.image == 3) {
+  } else if (userResultsPic[0].profile_picture == 3) {
     profilePic = 'profilePicture3.jpg';
   } else {
     profilePic = 'profilePicture4.jpg';
   }
 
   res.render('accountSettings', {
-    name: req.session.user.name,
-    users: users, // Passing the labeled data
-    picture: profilePic,
+    details: userResults,
+    picture: profilePic
   });
 });
 
