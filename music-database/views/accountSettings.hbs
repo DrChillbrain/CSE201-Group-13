@@ -1,0 +1,24 @@
+<div class='container'>
+  <h1>Account Settings</h1>
+  <hr>
+  <div>
+    <img src="/images/{{picture}}" alt="profilePicture">
+    <br>
+    <br>
+    {{#each details}}
+    <label for="name">Name: {{this.name}}</label>
+    <br>
+    <label for="username">Username: {{this.username}}</label>
+  </div>
+  <hr>
+  <div>
+    <label for="email">Email Address: {{this.email}}</label>
+  </div>
+  {{/each}}
+  <hr>
+  <div>
+    <a href='/users/change-password'>Change Password</a>
+  </div>
+  <hr>
+  <a href="/">Back to Homepage</a>
+</div>

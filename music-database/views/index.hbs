@@ -1,4 +1,5 @@
 <div id='mainContent'>
+<<<<<<< HEAD
   <h1>Note Dream</h1> <!-- Title above the taskbar -->
   <div class="taskbar">
     <div class="task">
@@ -19,6 +20,17 @@
     <p>Join us today to start enjoying the ultimate music experience.</p>
   </div>
 
+=======
+  {{#if user}}
+    Welcome,
+    {{user.username}}.
+    <a href='/users/logout'>Log Out</a>
+    <a href='/users/accountSettings'>Account Settings</a>
+  {{else}}
+    <a href='/users/login'>Log In</a>
+    <a href='/users/register'>Sign Up</a>
+  {{/if}}
+>>>>>>> afc0eaff440857dfb06d274dddd0c1d6e63dc14b
   {{#each errors}}
     <div class='alert alert-danger'>
       {{this}}
