@@ -1,40 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playlist Manager</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      padding-top: 60px; /* Give space for the fixed navbar */
+    }
+    .navbar {
+      background-color: #000; /* Black background for the taskbar */
+    }
+    .navbar a, .navbar button {
+      color: white; /* White text for contrast */
+    }
+    .playlistTable {
+      width: 100%;
+      margin-top: 20px;
+    }
+    .playlistTable th {
+      background-color: #000; /* Black for table headers */
+      color: white; /* White text for readability */
+    }
+    .playlistTable tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    .form-group h1 {
+      font-size: 24px;
+    }
+    .alert {
+      margin-top: 20px;
+    }
+  </style>
+</head>
 <body>
-  <a href='/' class='btn btn-outline-info'>Return to Home</a>
-  <form method='post'>
-    <div class='form-group'>
-      <label for='addingPlaylist'><h1><strong>Add a Playlist</strong></h1></label>
-      <input class='form-control' id='addingPlaylist' name='addingPlaylist' />
+  <!-- Taskbar -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark">
+    <div class="container-fluid">
+      <a href="/" class="navbar-brand">Playlist Manager</a>
+      <div>
+        <a href="/" class="btn btn-outline-light">Return to Home</a>
+        <!-- Adjusted button style here -->
+        <button type="submit" form="playlistForm" class="btn btn-outline-light">Submit</button>
+      </div>
     </div>
-    <button type='submit'>Submit</button>
+  </nav>
+
+  <form id="playlistForm" method="post">
+    <div class="form-group">
+      <label for="addingPlaylist"><h1><strong>Add a Playlist</strong></h1></label>
+      <input class="form-control" id="addingPlaylist" name="addingPlaylist" required />
+    </div>
+    <!-- Removed submit button here since it's now in the navbar -->
   </form>
+  <!-- Assuming you're using a template engine like Handlebars -->
   {{#each errors}}
-    <div class='alert alert-danger'>
+    <div class="alert alert-danger">
       {{this}}
     </div>
   {{/each}}
   {{#if confirmMessage}}
-    <div class='alert alert-success'>
+    <div class="alert alert-success">
       {{confirmMessage}}
     </div>
   {{/if}}
-  <br />
-  <div id='playlists'>
+  <div id="playlists">
     <h1><strong>Current Playlists</strong></h1>
-    <table class='playlistTable'>
-      <tr>
-        <td class='columnLabels'>ID:</td>
-        <td class='columnLabels'>Name:</td>
-      </tr>
-      {{#each playlists}}
+    <table class="table playlistTable">
+      <thead>
         <tr>
-          <td class='cell'>{{playlist_id}}</td>
-          <td class='cell'>{{playlist_name}}</td>
-          <td class='cell'><a
-              href='/users/viewplaylist/{{playlist_id}}'
-              class='btn btn-outline-info'
-            >View Playlist</a></td>
+          <th>ID:</th>
+          <th>Name:</th>
+          <th>Action:</th>
         </tr>
-      {{/each}}
+      </thead>
+      <tbody>
+        {{#each playlists}}
+          <tr>
+            <td>{{playlist_id}}</td>
+            <td>{{playlist_name}}</td>
+            <td><a href="/users/viewplaylist/{{playlist_id}}" class="btn btn-outline-info">View Playlist</a></td>
+          </tr>
+        {{/each}}
+      </tbody>
     </table>
   </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+</html>
