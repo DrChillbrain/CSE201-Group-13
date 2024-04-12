@@ -6,6 +6,7 @@
         Welcome, {{user.username}}!
         <a href='/users/logout'>Log Out</a>
         <a href='/users/change-password'>Change Password</a>
+
       {{else}}
         <a href='/users/login'>Log In</a>
         <a href='/users/register'>Sign Up</a>
@@ -14,15 +15,14 @@
   </div>
 
   <div class="description">
-    <p>Welcome to our music streaming platform!</p>
+    <p>Welcome to our music platform!</p>
     <p>Discover new music, save your favorite songs, and create playlists to fit every mood.</p>
     <p>Join us today to start enjoying the ultimate music experience.</p>
   </div>
 
   {{#if user}}
-    Welcome,
-    {{user.username}}.
-    <a href='/users/logout'>Log Out</a>
+    
+    
     <a href='/users/accountSettings'>Account Settings</a>
   {{else}}
     <a href='/users/login'>Log In</a>

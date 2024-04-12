@@ -103,7 +103,7 @@ h1 {
 
 #mainContent button {
   padding: 12px 24px;
-  background-color: #1db954;
+  background-color: #511db9;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -138,29 +138,45 @@ h1 {
   background-color: #fafafa;
 }
 
+/* Playlist styling */
 #playlists {
   margin-top: 40px;
+  background-color: #f9f9f9; /* Light background, off-white */
+  color: #000000; /* Dark text for contrast */
 }
 
 .playlistTable {
   width: 100%;
   border-collapse: collapse;
+  background-color: #ffffff; /* Pure white for the table background */
 }
 
 .playlistTable th, .playlistTable td {
   padding: 16px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #eaeaea; /* Very light grey for subtle row separation */
+  color: #000000; /* Dark text for readability */
 }
 
 .playlistTable th {
-  background-color: #f4f4f4;
-  color: #333;
+  background-color: #fafafa; /* Slightly off-white for headers */
+  color: #ff2f55; /* Apple Music red for header text */
   font-weight: bold;
 }
 
 .playlistTable tr:nth-child(even) {
-  background-color: #fafafa;
+  background-color: #f4f4f4; /* Even rows slightly darker for contrast */
 }
+
+/* Adding styling for links */
+.playlistTable a {
+  color: #ff2f55; /* Apple Music red for links */
+  text-decoration: none; /* No underline for a clean appearance */
+}
+
+.playlistTable a:hover {
+  text-decoration: underline; /* Underline on hover for feedback */
+}
+
 
 /* Title styling */
 h1 {
