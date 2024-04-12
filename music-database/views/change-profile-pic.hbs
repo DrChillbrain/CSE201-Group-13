@@ -1,0 +1,32 @@
+<div class='container'>
+  <h1>Change Profile Picture</h1>
+  {{#each errors}}
+    <div class='alert alert-danger'>
+      {{this}}
+    </div>
+  {{/each}}
+  <hr>
+  <label for="currentProfilePic">Current Profile Picture</label>
+  <img src="/images/{{picture}}" alt="profilePicture">
+  <hr>
+  <label for="newProfilePicOption">Choose a new profile picture</label>
+  <form method="POST">
+    <div>
+      <input type="radio" id="photo1" name="selectedPhotoId" value="1">
+      <label for="photo1"><img src="/images/profilePicture1.jpg" alt="Profile Picture 1"></label>
+    </div>
+    <div>
+      <input type="radio" id="photo2" name="selectedPhotoId" value="2">
+      <label for="photo2"><img src="/images/profilePicture2.jpg" alt="Profile Picture 2"></label>
+    </div>
+    <div>
+      <input type="radio" id="photo3" name="selectedPhotoId" value="3">
+      <label for="photo3"><img src="/images/profilePicture3.jpg" alt="Profile Picture 3"></label>
+    </div>
+    <div>
+      <input type="radio" id="photo4" name="selectedPhotoId" value="4">
+      <label for="photo4"><img src="/images/profilePicture4.jpg" alt="Profile Picture 4"></label>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+</div>

@@ -297,6 +297,57 @@ router.get('/accountSettings', async (req, res) => {
   });
 });
 
+router.get('/change-profile-pic', async (req, res) => {
+  const db = await openDB();
+  const userQueryPic = 'SELECT profile_picture FROM users WHERE id = $1';
+  const userResultsPic = await db.all(userQueryPic, [req.session.user.id]);
+
+  let profilePic = '';
+  if (userResultsPic[0].profile_picture == 1) {
+    profilePic = 'profilePicture1.jpg';
+  } else if (userResultsPic[0].profile_picture == 2) {
+    profilePic = 'profilePicture2.jpg';
+  } else if (userResultsPic[0].profile_picture == 3) {
+    profilePic = 'profilePicture3.jpg';
+  } else {
+    profilePic = 'profilePicture4.jpg';
+  }
+
+  res.render('change-profile-pic', { picture: profilePic });
+});
+
+router.post('/change-profile-pic', async (req, res) => {
+  const errors = [];
+  const db = await openDB();
+
+
+  if (!(typeof req.body.selectedPhotoId === 'undefined')) 
+  {
+    console.log('test1');
+    const selectQuery = 'UPDATE users SET profile_picture = $1 WHERE id = $2';
+    const data = await db.all(selectQuery, [req.body.selectedPhotoId , req.session.user.id]);
+    res.redirect('accountSettings');
+  }
+  else 
+  {
+    const userQueryPic = 'SELECT profile_picture FROM users WHERE id = $1';
+    const userResultsPic = await db.all(userQueryPic, [req.session.user.id]);
+
+    let profilePic = '';
+    if (userResultsPic[0].profile_picture == 1) {
+      profilePic = 'profilePicture1.jpg';
+    } else if (userResultsPic[0].profile_picture == 2) {
+      profilePic = 'profilePicture2.jpg';
+    } else if (userResultsPic[0].profile_picture == 3) {
+      profilePic = 'profilePicture3.jpg';
+    } else {
+      profilePic = 'profilePicture4.jpg';
+    }
+    errors.push('Must choose an option');
+    res.render('change-profile-pic', { errors , picture: profilePic});
+  }
+});
+
 router.get('/editplaylist/:id', async (req, res) => {
   console.log("We're in the edit playlist route.");
   if (req.session.user) {
