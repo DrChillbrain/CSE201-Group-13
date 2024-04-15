@@ -1,15 +1,18 @@
 <body>
   {{#if playlistID}}
     <h1><strong>{{playlistName}}</strong></h1>
+    <p>{{description}}</p>
     {{#each errors}}
       <div class='alert alert-danger'>
         {{this}}
       </div>
     {{/each}}
-    <a
-      href='/users/editplaylist/{{playlistID}}'
-      class='btn btn-outline-info'
-    >Edit Playlist</a>
+    {{#if editor}}
+      <a
+        href='/users/editplaylist/{{playlistID}}'
+        class='btn btn-outline-info'
+      >Edit Playlist</a>
+    {{/if}}
     <table class='songTable'>
       <tr>
         <td class='columnLabels'>Name:</td>

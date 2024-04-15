@@ -2,7 +2,7 @@ body {
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
-  background-image: url('background.jpg'); /* Replace 'background.jpg' with the path to your background image */
+  /*background-image: url('background.jpg'); Replace 'background.jpg' with the path to your background image */
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -11,7 +11,12 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background to the container */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* Add a semi-transparent white background to the container */
 }
 
 h1 {
@@ -70,20 +75,32 @@ h1 {
 
 /* Specific styling for different sections */
 #mainContent {
-  background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background to the main content */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* Add a semi-transparent white background to the main content */
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-#loginContent, #signupContent {
-  background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background to the login and signup content */
+#loginContent,
+#signupContent {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* Add a semi-transparent white background to the login and signup content */
   padding: 40px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-#loginContent h1, #signupContent h1 {
+#loginContent h1,
+#signupContent h1 {
   margin-bottom: 30px;
 }
 
@@ -123,7 +140,8 @@ h1 {
   border-collapse: collapse;
 }
 
-.songTable th, .songTable td {
+.songTable th,
+.songTable td {
   padding: 16px;
   border-bottom: 1px solid #eee;
 }
@@ -151,7 +169,8 @@ h1 {
   background-color: #ffffff; /* Pure white for the table background */
 }
 
-.playlistTable th, .playlistTable td {
+.playlistTable th,
+.playlistTable td {
   padding: 16px;
   border-bottom: 1px solid #eaeaea; /* Very light grey for subtle row separation */
   color: #000000; /* Dark text for readability */
@@ -176,7 +195,6 @@ h1 {
 .playlistTable a:hover {
   text-decoration: underline; /* Underline on hover for feedback */
 }
-
 
 /* Title styling */
 h1 {

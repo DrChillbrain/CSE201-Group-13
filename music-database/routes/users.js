@@ -211,12 +211,17 @@ router.post('/playlist', async (req, res) => {
       user: req.session.user,
     });
   } else {
+    let isPublic = false;
+    if (req.body.publicity == 'on') {
+      isPublic = true;
+    }
     const insertQuery =
-      'INSERT INTO playlists (playlist_name, user_id, playlist_description) VALUES ($1, $2, $3)';
+      'INSERT INTO playlists (playlist_name, playlist_description, user_id, public) VALUES ($1, $2, $3, $4)';
     const results = db.all(insertQuery, [
       req.body.addingPlaylist,
+      req.body.description,
       req.session.user.id,
-      req.body.description, //added here
+      isPublic,
     ]);
     //console.log(results);
     const playlistsQuery = 'SELECT * FROM playlists WHERE user_id = $1';
@@ -234,42 +239,59 @@ router.post('/playlist', async (req, res) => {
 });
 
 router.get('/viewplaylist/:id', async (req, res) => {
-  console.log("We're in this view route.");
+  let signedIn,
+    editor = false;
   if (req.session.user) {
-    const db = await openDB();
-    const playlistQuery = 'SELECT * FROM playlists WHERE playlist_id = $1';
-    const playlistResults = await db.all(playlistQuery, [req.params.id]);
-    if (playlistResults[0].user_id == req.session.user.id) {
-      //code for rendering songs already in the playlist
-      const playlistSongQuery =
-        'SELECT * FROM playlist_songs WHERE playlist_id = $1';
-      const playlistSongResults = await db.all(playlistSongQuery, [
-        req.params.id,
-      ]);
-      let songResult, songQuery;
-      let songList = [];
-      for (i = 0; i < playlistSongResults.length; i++) {
-        console.log(playlistSongResults[i].song_id);
-        songQuery = 'SELECT * FROM songs WHERE id = $1';
-        songResult = await db.all(songQuery, [playlistSongResults[i].song_id]);
-        songList.push({
-          id: playlistSongResults[0].id,
-          name: songResult[0].name,
-          genre: songResult[0].genre,
-          artist: songResult[0].artist,
-        });
+    signedIn = true;
+  }
+  console.log("We're in this view route.");
+  const db = await openDB();
+  const playlistQuery = 'SELECT * FROM playlists WHERE playlist_id = $1';
+  const playlistResults = await db.all(playlistQuery, [req.params.id]);
+  if (signedIn || playlistResults[0].public == true) {
+    if (signedIn) {
+      if (playlistResults[0].user_id == req.session.user.id) {
+        editor = true;
       }
-      const idToPass = parseInt(req.params.id, 10);
+    }
+    //code for rendering songs already in the playlist
+    const playlistSongQuery =
+      'SELECT * FROM playlist_songs WHERE playlist_id = $1';
+    const playlistSongResults = await db.all(playlistSongQuery, [
+      req.params.id,
+    ]);
+    let songResult, songQuery;
+    let songList = [];
+    for (i = 0; i < playlistSongResults.length; i++) {
+      console.log(playlistSongResults[i].song_id);
+      songQuery = 'SELECT * FROM songs WHERE id = $1';
+      songResult = await db.all(songQuery, [playlistSongResults[i].song_id]);
+      songList.push({
+        id: playlistSongResults[0].id,
+        name: songResult[0].name,
+        genre: songResult[0].genre,
+        artist: songResult[0].artist,
+      });
+    }
+    const idToPass = parseInt(req.params.id, 10);
+    if (editor) {
       res.render('viewplaylist', {
         songsInList: songList,
         playlistName: playlistResults[0].playlist_name,
+        description: playlistResults[0].playlist_description,
         playlistID: idToPass,
+        editor: true,
       });
     } else {
-      res.redirect('/');
+      res.render('viewplaylist', {
+        songsInList: songList,
+        playlistName: playlistResults[0].playlist_name,
+        description: playlistResults[0].playlist_description,
+        playlistID: idToPass,
+      });
     }
   } else {
-    res.redirect('/users/login');
+    res.redirect('/');
   }
 });
 
@@ -320,16 +342,15 @@ router.post('/change-profile-pic', async (req, res) => {
   const errors = [];
   const db = await openDB();
 
-
-  if (!(typeof req.body.selectedPhotoId === 'undefined')) 
-  {
+  if (!(typeof req.body.selectedPhotoId === 'undefined')) {
     console.log('test1');
     const selectQuery = 'UPDATE users SET profile_picture = $1 WHERE id = $2';
-    const data = await db.all(selectQuery, [req.body.selectedPhotoId , req.session.user.id]);
+    const data = await db.all(selectQuery, [
+      req.body.selectedPhotoId,
+      req.session.user.id,
+    ]);
     res.redirect('accountSettings');
-  }
-  else 
-  {
+  } else {
     const userQueryPic = 'SELECT profile_picture FROM users WHERE id = $1';
     const userResultsPic = await db.all(userQueryPic, [req.session.user.id]);
 
@@ -344,7 +365,7 @@ router.post('/change-profile-pic', async (req, res) => {
       profilePic = 'profilePicture4.jpg';
     }
     errors.push('Must choose an option');
-    res.render('change-profile-pic', { errors , picture: profilePic});
+    res.render('change-profile-pic', { errors, picture: profilePic });
   }
 });
 
@@ -383,6 +404,7 @@ router.get('/editplaylist/:id', async (req, res) => {
         songsInList: songList,
         playlistName: playlistResults[0].playlist_name,
         playlistID: idToPass,
+        publicity: playlistResults[0].public,
       });
     } else {
       res.redirect('/');
@@ -463,6 +485,7 @@ router.post('/editplaylist/:id', async (req, res) => {
         songsInList: songList,
         playlistName: playlistResults[0].playlist_name,
         playlistID: idToPass,
+        publicity: playlistResults[0].public,
       });
     } else {
       res.redirect('/');
@@ -519,5 +542,45 @@ router.get(
     }
   }
 );
+
+router.get('/setpublic/:playlistid', async (req, res) => {
+  if (req.session.user) {
+    const db = await openDB();
+    const playlistQuery = 'SELECT * FROM playlists WHERE playlist_id = $1';
+    const playlistResults = await db.all(playlistQuery, [
+      req.params.playlistid,
+    ]);
+    if (playlistResults[0].user_id == req.session.user.id) {
+      const publicityQuery =
+        'UPDATE playlists SET public = true WHERE playlist_id = $1';
+      const results = db.all(publicityQuery, [req.params.playlistid]);
+      res.redirect('/users/editplaylist/' + req.params.playlistid);
+    } else {
+      res.redirect('/');
+    }
+  } else {
+    res.redirect('/');
+  }
+});
+
+router.get('/setprivate/:playlistid', async (req, res) => {
+  if (req.session.user) {
+    const db = await openDB();
+    const playlistQuery = 'SELECT * FROM playlists WHERE playlist_id = $1';
+    const playlistResults = await db.all(playlistQuery, [
+      req.params.playlistid,
+    ]);
+    if (playlistResults[0].user_id == req.session.user.id) {
+      const publicityQuery =
+        'UPDATE playlists SET public = false WHERE playlist_id = $1';
+      const results = db.all(publicityQuery, [req.params.playlistid]);
+      res.redirect('/users/editplaylist/' + req.params.playlistid);
+    } else {
+      res.redirect('/');
+    }
+  } else {
+    res.redirect('/');
+  }
+});
 
 module.exports = router;

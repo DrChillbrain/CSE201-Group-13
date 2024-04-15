@@ -1,93 +1,113 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Playlist Manager</title>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      padding-top: 60px; /* Give space for the fixed navbar */
-    }
-    .navbar {
-      background-color: #000; /* Black background for the taskbar */
-    }
-    .navbar a, .navbar button {
-      color: white; /* White text for contrast */
-    }
-    .playlistTable {
-      width: 100%;
-      margin-top: 20px;
-    }
-    .playlistTable th {
-      background-color: #000; /* Black for table headers */
-      color: white; /* White text for readability */
-    }
-    .playlistTable tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-    .form-group h1 {
-      font-size: 24px;
-    }
-    .alert {
-      margin-top: 20px;
-    }
-  </style>
-</head>
-<body>
-  <!-- Taskbar -->
-  <nav class="navbar navbar-expand-lg fixed-top navbar-dark">
-    <div class="container-fluid">
-      <a href="/" class="navbar-brand">Playlist Manager</a>
-      <div>
-        <a href="/" class="btn btn-outline-light">Return to Home</a>
-        <!-- Adjusted button style here -->
-        <button type="submit" form="playlistForm" class="btn btn-outline-light">Submit</button>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Playlist Manager</title>
+    <link
+      href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'
+      rel='stylesheet'
+    />
+    <style>
+      body { padding-top: 60px; /* Give space for the fixed navbar */ } .navbar
+      { background-color: #000; /* Black background for the taskbar */ } .navbar
+      a, .navbar button { color: white; /* White text for contrast */ }
+      .playlistTable { width: 100%; margin-top: 20px; } .playlistTable th {
+      background-color: #000; /* Black for table headers */ color: white; /*
+      White text for readability */ } .playlistTable tr:nth-child(even) {
+      background-color: #f2f2f2; } .form-group h1 { font-size: 24px; } .alert {
+      margin-top: 20px; }
+    </style>
+  </head>
+  <body>
+    <!-- Taskbar -->
+    <nav class='navbar navbar-expand-lg fixed-top navbar-dark'>
+      <div class='container-fluid'>
+        <a href='/' class='navbar-brand'>Playlist Manager</a>
+        <div>
+          <a href='/' class='btn btn-outline-light'>Return to Home</a>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  <form id="playlistForm" method="post">
-    <div class="form-group">
-      <label for="addingPlaylist"><h1><strong>Add a Playlist</strong></h1></label>
-      <input class="form-control" id="addingPlaylist" name="addingPlaylist" required />
-    </div>
-    <!-- Removed submit button here since it's now in the navbar -->
-  </form>
-  <!-- Assuming you're using a template engine like Handlebars -->
-  {{#each errors}}
-    <div class="alert alert-danger">
-      {{this}}
-    </div>
-  {{/each}}
-  {{#if confirmMessage}}
-    <div class="alert alert-success">
-      {{confirmMessage}}
-    </div>
-  {{/if}}
-  <div id="playlists">
-    <h1><strong>Current Playlists</strong></h1>
-    <table class="table playlistTable">
-      <thead>
-        <tr>
-          <th>ID:</th>
-          <th>Name:</th>
-          <th>Action:</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each playlists}}
+    <form id='playlistForm' method='post'>
+      <div class='form-group'>
+        <label for='addingPlaylist'><h1><strong>Add a Playlist</strong></h1></label>
+        <h2>Name</h2>
+        <input
+          class='form-control'
+          id='addingPlaylist'
+          name='addingPlaylist'
+          maxlength='255'
+          required
+        />
+        <h2>Description</h2>
+        <p>A visible description for your playlist. Max 2000 characters.</p>
+        <input
+          class='form-control'
+          id='description'
+          name='description'
+          maxlength='2000'
+        />
+        <h2>Publicity</h2>
+        <p>Public playlists can be linked to and viewed by anyone. Private
+          playlists can only be viewed by you.</p>
+        <label>
+          <input id='publicity' name='publicity' type='checkbox' />
+          Public
+        </label>
+        <br />
+        <button
+          type='submit'
+          form='playlistForm'
+          class='btn btn-outline-dark'
+        >Submit</button>
+      </div>
+    </form>
+    <!-- Assuming you're using a template engine like Handlebars -->
+    {{#each errors}}
+      <div class='alert alert-danger'>
+        {{this}}
+      </div>
+    {{/each}}
+    {{#if confirmMessage}}
+      <div class='alert alert-success'>
+        {{confirmMessage}}
+      </div>
+    {{/if}}
+    <div id='playlists'>
+      <h1><strong>Your Playlists</strong></h1>
+      <table class='table playlistTable'>
+        <thead>
           <tr>
-            <td>{{playlist_id}}</td>
-            <td>{{playlist_name}}</td>
-            <td><a href="/users/viewplaylist/{{playlist_id}}" class="btn btn-outline-info">View Playlist</a></td>
+            <th>Name</th>
+            <th>Publicity</th>
+            <th></th>
           </tr>
-        {{/each}}
-      </tbody>
-    </table>
-  </div>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+        </thead>
+        <tbody>
+          {{#each playlists}}
+            <tr>
+              <td>{{playlist_name}}</td>
+              {{#if public}}
+                <td>Public</td>
+              {{else}}
+                <td>Private</td>
+              {{/if}}
+              <td><a
+                  href='/users/viewplaylist/{{playlist_id}}'
+                  class='btn btn-outline-info'
+                >View Playlist</a></td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+    <script src='https://code.jquery.com/jquery-3.5.1.slim.min.js'></script>
+    <script
+      src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js'
+    ></script>
+    <script
+      src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'
+    ></script>
+  </body>
 </html>

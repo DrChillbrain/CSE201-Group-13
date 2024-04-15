@@ -5,6 +5,17 @@
     </div>
   {{/each}}
   <h1>Editing {{playlistName}}</h1>
+  {{#if publicity}}
+  <p>{{playlistName}} is currently Public.</p>
+  <a href='/users/setprivate/{{playlistID}}'
+    class='btn btn-outline-info'
+    >Set to Private</a>
+  {{else}}
+  <p>{{playlistName}} is currently Private.</p>
+  <a href='/users/setpublic/{{playlistID}}'
+    class='btn btn-outline-info'
+    >Set to Public</a>
+  {{/if}}
    <table class='songTable'>
     <tr>
     <td class='columnLabels'>Name:</td>
