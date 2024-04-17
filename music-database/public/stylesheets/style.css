@@ -238,3 +238,76 @@ h1 {
   font-size: 18px;
   line-height: 1.5;
 }
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: white;
+  color: black;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+}
+
+.taskbar {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  text-align: right;
+}
+
+.home-link {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.profile-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-picture {
+  width: 150px; /* Smaller size */
+  height: 150px;
+  border-radius: 50%; /* Circular profile picture */
+  margin-bottom: 10px;
+}
+
+.change-pic-link, .password-link {
+  background-color: black;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+hr {
+  border-color: #ccc; /* Lighter line for cleaner look */
+}
+
+.user-details p {
+  margin: 5px 0;
+}
+
+.password-section {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .container {
+      width: 100%;
+      padding: 10px;
+  }
+
+  .taskbar {
+      text-align: center;
+  }
+}

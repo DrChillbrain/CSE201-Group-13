@@ -1,25 +1,32 @@
-<div class='container'>
-  <h1>Account Settings</h1>
-  <hr>
-  <div>
-    <img src="/images/{{picture}}" alt="profilePicture">
-    <a href='/users/change-profile-pic'>Change Profile Picture</a>
-    <br>
-    <br>
-    {{#each details}}
-    <label for="name">Name: {{this.name}}</label>
-    <br>
-    <label for="username">Username: {{this.username}}</label>
-  </div>
-  <hr>
-  <div>
-    <label for="email">Email Address: {{this.email}}</label>
-  </div>
-  {{/each}}
-  <hr>
-  <div>
-    <a href='/users/change-password'>Change Password</a>
-  </div>
-  <hr>
-  <a href="/">Back to Homepage</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Account Settings</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <div class="taskbar">
+        <a href="/" class="home-link">Back to Homepage</a>
+    </div>
+    <h1>Account Settings</h1>
+    <hr>
+    <div class="profile-section">
+        <img src="/images/{{picture}}" alt="profilePicture" class="profile-picture">
+        <a href='/users/change-profile-pic' class="change-pic-link">Change Profile Picture</a>
+        {{#each details}}
+        <div class="user-details">
+            <p><strong>Name:</strong> {{this.name}}</p>
+            <p><strong>Username:</strong> {{this.username}}</p>
+            <p><strong>Email Address:</strong> {{this.email}}</p>
+        </div>
+        {{/each}}
+    </div>
+    <hr>
+    <div class="password-section">
+        <a href='/users/change-password' class="password-link">Change Password</a>
+    </div>
 </div>
+</body>
+</html>
