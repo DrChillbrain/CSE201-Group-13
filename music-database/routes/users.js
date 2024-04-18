@@ -267,7 +267,7 @@ router.get('/viewplaylist/:id', async (req, res) => {
       songQuery = 'SELECT * FROM songs WHERE id = $1';
       songResult = await db.all(songQuery, [playlistSongResults[i].song_id]);
       songList.push({
-        id: playlistSongResults[0].id,
+        id: playlistSongResults[i].id,
         name: songResult[0].name,
         genre: songResult[0].genre,
         artist: songResult[0].artist,
@@ -391,7 +391,7 @@ router.get('/editplaylist/:id', async (req, res) => {
         songQuery = 'SELECT * FROM songs WHERE id = $1';
         songResult = await db.all(songQuery, [playlistSongResults[i].song_id]);
         songList.push({
-          id: playlistSongResults[0].id,
+          id: playlistSongResults[i].id,
           name: songResult[0].name,
           genre: songResult[0].genre,
           artist: songResult[0].artist,
@@ -433,7 +433,7 @@ router.post('/editplaylist/:id', async (req, res) => {
         songQuery = 'SELECT * FROM songs WHERE id = $1';
         songResult = await db.all(songQuery, [playlistSongResults[i].song_id]);
         songList.push({
-          id: playlistSongResults[0].id,
+          id: playlistSongResults[i].id,
           name: songResult[0].name,
           genre: songResult[0].genre,
           artist: songResult[0].artist,
