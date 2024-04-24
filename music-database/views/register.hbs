@@ -1,10 +1,21 @@
-<body>
-  <h1><strong>User Registration</strong></h1>
+<div id='mainContent'>
+  <h1>Note Dream</h1> <!-- Title above the taskbar -->
+  <div class="taskbar">
+    <div class="task">
+      <a href='/users/login'>Log In</a>
+    </div>
+  </div>
+
   {{#each errors}}
     <div class='alert alert-danger'>
       {{this}}
     </div>
   {{/each}}
+  {{#if confirmMessage}}
+    <div class='alert alert-success'>
+      {{confirmMessage}}
+    </div>
+  {{/if}}
   <form method='post'>
     <div class='form-group'>
       <label for='username'>Name</label>
@@ -38,4 +49,4 @@
     </div>
     <button class='btn btn-danger' type='submit'>Submit</button>
   </form>
-</body>
+</div>
