@@ -1,0 +1,17 @@
+<div class='container'>
+  <h1>Change Profile Email</h1>
+  {{#each errors}}
+    <div class='alert alert-danger'>
+      {{this}}
+    </div>
+  {{/each}}
+  <hr>
+  <label for="currentProfilePic">Current Profile Email: {{email}}</label>
+  <hr>
+  <form method='post'>
+    <div class='form-group'>
+      <label for='email'>New Profile Email</label>
+      <input class='form-control' id='email' name='email' />
+    </div>
+    <button class='btn btn-danger' type='submit'>Submit</button>
+  </form>

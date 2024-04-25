@@ -6,11 +6,14 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="container">
-    <div class="taskbar">
-        <a href="/" class="home-link">Back to Homepage</a>
+<div id='mainContent'>
+  <h1>Note Dream</h1> <!-- Title above the taskbar -->
+  <div class="taskbar">
+    <div class="task">
+      <a>Account Settings</a>
+      <a href="/" class="home-link">Back to Homepage</a>
     </div>
-    <h1>Account Settings</h1>
+  </div>
     <hr>
     <div class="profile-section">
         <img src="/images/{{picture}}" alt="profilePicture" class="profile-picture">
@@ -26,6 +29,9 @@
     <hr>
     <div class="password-section">
         <a href='/users/change-password' class="password-link">Change Password</a>
+        <a href='/users/change-name' class="password-link">Change Name</a>
+        <a href='/users/change-email' class="password-link">Change Email</a>
+        <a href='/users/change-username' class="password-link">Change Username</a>
     </div>
 </div>
 </body>

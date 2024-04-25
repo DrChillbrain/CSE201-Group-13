@@ -30,7 +30,8 @@ router.post('/register', async (req, res) => {
       req.body.email &&
       req.body.username &&
       req.body.password &&
-      req.body.passwordConf
+      req.body.passwordConf &&
+      (!(typeof req.body.selectedPhotoId === 'undefined'))
     )
   ) {
     errors.push('All fields are required.');
@@ -51,13 +52,14 @@ router.post('/register', async (req, res) => {
 
   if (!errors.length) {
     const insertQuery =
-      'INSERT INTO users (name, username, email, password) VALUES ($1, $2, $3, $4)';
+      'INSERT INTO users (name, username, email, password, profile_picture) VALUES ($1, $2, $3, $4, $5)';
     const password = await bcrypt.hash(req.body.password, 10);
     const results = db.all(insertQuery, [
       req.body.name,
       req.body.username,
       req.body.email,
       password,
+      req.body.selectedPhotoId
     ]);
     console.log(results);
     res.redirect('login/?reset=false');
@@ -351,6 +353,7 @@ router.post('/change-profile-pic', async (req, res) => {
     ]);
     res.redirect('accountSettings');
   } else {
+
     const userQueryPic = 'SELECT profile_picture FROM users WHERE id = $1';
     const userResultsPic = await db.all(userQueryPic, [req.session.user.id]);
 
@@ -364,8 +367,120 @@ router.post('/change-profile-pic', async (req, res) => {
     } else {
       profilePic = 'profilePicture4.jpg';
     }
+
     errors.push('Must choose an option');
     res.render('change-profile-pic', { errors, picture: profilePic });
+  }
+});
+
+router.get('/change-name', async (req, res) => {
+  const db = await openDB();
+  const userQueryName = 'SELECT name FROM users WHERE id = $1';
+  const userResultsName = await db.all(userQueryName, [req.session.user.id]);
+
+  res.render('change-name', { name: userResultsName[0].name });
+});
+
+router.post('/change-name', async (req, res) => {
+  const errors = [];
+  const db = await openDB();
+
+  if ((req.body.name)) 
+  {
+    console.log('test1');
+    const selectQuery = 'UPDATE users SET name = $1 WHERE id = $2';
+    const data = await db.all(selectQuery, [
+      req.body.name,
+      req.session.user.id,
+    ]);
+    res.redirect('accountSettings');
+  } else {
+
+    const userQueryName = 'SELECT name FROM users WHERE id = $1';
+    const userResultsName = await db.all(userQueryName, [req.session.user.id]);
+    errors.push('Must create new name');
+    res.render('change-name', { errors, name: userResultsName[0].name });
+  }
+});
+
+router.get('/change-email', async (req, res) => {
+  const db = await openDB();
+  const userQueryEmail = 'SELECT email FROM users WHERE id = $1';
+  const userResultsEmail = await db.all(userQueryEmail, [req.session.user.id]);
+
+  res.render('change-email', { email: userResultsEmail[0].email });
+});
+
+router.post('/change-email', async (req, res) => {
+  const errors = [];
+  const db = await openDB();
+
+  const userQueryEmail = 'SELECT email FROM users WHERE id = $1';
+  const userResultsEmail = await db.all(userQueryEmail, [req.session.user.id]);
+  
+  if ((req.body.email)) 
+  {
+  const emailSelectQuery = 'SELECT * FROM users WHERE email = $1';
+  const emailData = await db.all(emailSelectQuery, [req.body.email]);
+  if (emailData.length > 0) 
+  {
+    errors.push('That email has already been registered to an account.');
+    res.render('change-email', { errors, email: userResultsEmail[0].email });
+  }
+  else {
+    const selectQuery = 'UPDATE users SET email = $1 WHERE id = $2';
+    const data = await db.all(selectQuery, [
+      req.body.email,
+      req.session.user.id,
+    ]);
+    res.redirect('accountSettings');
+  }
+
+  } else {
+
+    errors.push('Must create new email');
+    res.render('change-email', { errors, email: userResultsEmail[0].email });
+  }
+});
+
+router.get('/change-username', async (req, res) => {
+  const db = await openDB();
+  const userQueryUsername = 'SELECT username FROM users WHERE id = $1';
+  const userResultsUsername = await db.all(userQueryUsername, [req.session.user.id]);
+
+  res.render('change-username', { username: userResultsUsername[0].username });
+});
+
+router.post('/change-username', async (req, res) => {
+  const errors = [];
+  const db = await openDB();
+
+  const userQueryUsername = 'SELECT username FROM users WHERE id = $1';
+  const userResultsUsername = await db.all(userQueryUsername, [req.session.user.id]);
+
+  if ((req.body.username)) 
+  {
+  const userSelectQuery = 'SELECT * FROM users WHERE username = $1';
+  const userData = await db.all(userSelectQuery, [req.body.username]);
+  if (userData.length > 0) 
+  {
+    errors.push('That username has already been registered to an account.');
+    res.render('change-username', { errors, username: userResultsUsername[0].username });
+  }
+  else
+  {
+    const selectQuery = 'UPDATE users SET username = $1 WHERE id = $2';
+    const data = await db.all(selectQuery, [
+      req.body.username,
+      req.session.user.id,
+    ]);
+    res.redirect('accountSettings');
+  }
+    
+  } else {
+    
+    errors.push('Must create new username');
+    res.render('change-username', { errors, username: userResultsUsername[0].username });
   }
 });
 
