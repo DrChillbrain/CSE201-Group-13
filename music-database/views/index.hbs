@@ -1,9 +1,11 @@
 <div id='mainContent'>
-  <h1>Note Dream</h1> <!-- Title above the taskbar -->
-  <div class="taskbar">
-    <div class="task">
+  <h1>Note Dream</h1>
+  <!-- Title above the taskbar -->
+  <div class='taskbar'>
+    <div class='task'>
       {{#if user}}
-        Welcome, {{user.username}}!
+        Welcome,
+        {{user.username}}!
         <a href='/users/logout'>Log Out</a>
         <a href='/users/accountSettings'>Account Settings</a>
 
@@ -14,15 +16,14 @@
     </div>
   </div>
 
-  <div class="description">
+  <div class='description'>
     <p>Welcome to our music platform!</p>
-    <p>Discover new music, save your favorite songs, and create playlists to fit every mood.</p>
+    <p>Discover new music, save your favorite songs, and create playlists to fit
+      every mood.</p>
     <p>Join us today to start enjoying the ultimate music experience.</p>
   </div>
 
-  {{#if user}}
-    
-  {{else}}
+  {{#if user}}{{else}}
     <a href='/users/login'>Log In</a>
     <a href='/users/register'>Sign Up</a>
   {{/if}}
@@ -31,8 +32,8 @@
       {{this}}
     </div>
   {{/each}}
-
+  <a href='/users/browse' class='btn btn-outline-info'>Browse Public Playlists</a>
   {{#if user}}
-    <a href='/users/playlist' class='btn btn-outline-info'>Go to Playlists</a>
+    <a href='/users/playlist' class='btn btn-outline-info'>View Your Playlists</a>
   {{/if}}
 </div>

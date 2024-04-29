@@ -1,0 +1,63 @@
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Browse Playlists</title>
+    <link
+      href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'
+      rel='stylesheet'
+    />
+    <style>
+      body { padding-top: 60px; /* Give space for the fixed navbar */ } .navbar
+      { background-color: #000; /* Black background for the taskbar */ } .navbar
+      a, .navbar button { color: white; /* White text for contrast */ }
+      .playlistTable { width: 100%; margin-top: 20px; } .playlistTable th {
+      background-color: #000; /* Black for table headers */ color: white; /*
+      White text for readability */ } .playlistTable tr:nth-child(even) {
+      background-color: #f2f2f2; } .form-group h1 { font-size: 24px; } .alert {
+      margin-top: 20px; }
+    </style>
+  </head>
+  <body>
+    <!-- Taskbar -->
+    <nav class='navbar navbar-expand-lg fixed-top navbar-dark'>
+      <div class='container-fluid'>
+        <a href='/' class='navbar-brand'>Browse Playlists</a>
+        <div>
+          <a href='/' class='btn btn-outline-light'>Return to Home</a>
+        </div>
+      </div>
+    </nav>
+    <div id='playlists'>
+      <h1><strong>Public Playlists</strong></h1>
+      <table class='table playlistTable'>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Created By</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each playlists}}
+            <tr>
+              <td>{{playlist_name}}</td>
+              <td>{{user_id}}</td>
+              <td><a
+                  href='/users/viewplaylist/{{playlist_id}}'
+                  class='btn btn-outline-info'
+                >View Playlist</a></td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+    <script src='https://code.jquery.com/jquery-3.5.1.slim.min.js'></script>
+    <script
+      src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js'
+    ></script>
+    <script
+      src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'
+    ></script>
+  </body>
+</html>

@@ -5,6 +5,10 @@
     </div>
   {{/each}}
   <h1>Editing {{playlistName}}</h1>
+  <a
+  href='/users/viewplaylist/{{playlistID}}'
+  class='btn btn-outline-info'
+  >Done</a>
   {{#if publicity}}
   <p>{{playlistName}} is currently Public.</p>
   <a href='/users/setprivate/{{playlistID}}'
