@@ -21,7 +21,24 @@
       every mood.</p>
     <p>Join us today to start enjoying the ultimate music experience.</p>
   </div>
-
+<hr>
+<div>
+<h2>Top 5 User Songs</h2>
+<table class='songTable'>
+        <tr>
+          <td class='columnLabels'>Name</td>
+          <td class='columnLabels'>Genre</td>
+          <td class='columnLabels'>Artist</td>
+        </tr>
+        {{#each songsInList}}
+          <tr>
+            <td class='cell'>{{name}}</td>
+            <td class='cell'>{{genre}}</td>
+            <td class='cell'>{{artist}}</td>
+          </tr>
+        {{/each}}
+      </table>
+</div>
   {{#each errors}}
     <div class='alert alert-danger'>
       {{this}}
