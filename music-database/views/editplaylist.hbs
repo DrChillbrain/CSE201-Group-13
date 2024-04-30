@@ -1,68 +1,68 @@
 <div id='mainContent'>
+  <h1>Note Dream</h1> <!-- Title above the taskbar -->
+  <div class="taskbar">
+    <div class="task">
+      <a href='/users/register'>Sign Up</a>
+      <a href="/" class="home-link">Back to Homepage</a>
+    </div>
+  </div>
+
   {{#each errors}}
     <div class='alert alert-danger'>
       {{this}}
     </div>
   {{/each}}
   <h1>Editing {{playlistName}}</h1>
-  <a
-  href='/users/viewplaylist/{{playlistID}}'
-  class='btn btn-outline-info'
-  >Done</a>
+  <a href='/users/viewplaylist/{{playlistID}}' class='btn btn-outline-info'>Done</a>
   {{#if publicity}}
-  <p>{{playlistName}} is currently Public.</p>
-  <a href='/users/setprivate/{{playlistID}}'
-    class='btn btn-outline-info'
-    >Set to Private</a>
+    <p>{{playlistName}} is currently Public.</p>
+    <a href='/users/setprivate/{{playlistID}}' class='btn btn-outline-info'>Set to Private</a>
   {{else}}
-  <p>{{playlistName}} is currently Private.</p>
-  <a href='/users/setpublic/{{playlistID}}'
-    class='btn btn-outline-info'
-    >Set to Public</a>
+    <p>{{playlistName}} is currently Private.</p>
+    <a href='/users/setpublic/{{playlistID}}' class='btn btn-outline-info'>Set to Public</a>
   {{/if}}
-   <table class='songTable'>
+  <table class='songTable'>
     <tr>
-    <td class='columnLabels'>Name:</td>
-    <td class='columnLabels'>Genre:</td>
-    <td class='columnLabels'>Artist:</td>
+      <td class='columnLabels'>Name:</td>
+      <td class='columnLabels'>Genre:</td>
+      <td class='columnLabels'>Artist:</td>
     </tr>
     {{#each songsInList}}
-    <tr>
-     <td class='cell'>{{name}}</td>
-      <td class='cell'>{{genre}}</td>
-      <td class='cell'>{{artist}}</td>
-      <td class='cell'><a
-                href='/users/removefromplaylist/{{../playlistID}}/{{id}}'
-                class='btn btn-outline-info'
-              >Remove from Playlist</a></td>
-    </tr>
+      <tr>
+        <td class='cell'>{{name}}</td>
+        <td class='cell'>{{genre}}</td>
+        <td class='cell'>{{artist}}</td>
+        <td class='cell'>
+          <a href='/users/removefromplaylist/{{../playlistID}}/{{id}}' class='btn btn-outline-info'>Remove from Playlist</a>
+        </td>
+      </tr>
     {{/each}}
   </table>
   <div id='songs'>
     <h2>Search for Songs</h2>
     <form method='post'>
-    <div class='form-group'>
-      <label for='search'>Search by Name</label>
-      <input class='form-control' id='search' name='search' />
-      <label>Filter by Genre:</label><br />
-      <input type='checkbox' id='pop' name='pop' value='true' />
-      <label for='pop'>Pop</label>
-      <input type='checkbox' id='rock' name='rock' value='true' />
-      <label for='rock'>Rock</label>
-      <input type='checkbox' id='alternative' name='alternative' value='true' />
-      <label for='alternative'>Alternative</label>
-      <input type='checkbox' id='metal' name='metal' value='true' />
-      <label for='metal'>Metal</label>
-      <input type='checkbox' id='jazz' name='jazz' value='true' />
-      <label for='jazz'>Jazz</label>
-      <input type='checkbox' id='disco' name='disco' value='true' />
-      <label for='disco'>Disco</label>
-      <br />
-      <label for='artistsearch'>Search by Artist</label>
-      <input class='form-control' id='artistsearch' name='artistsearch' />
-    </div>
-    <button type='submit'>Search</button>
-  </form>
+      <div class='form-group'>
+        <label for='search'>Search by Name</label>
+        <input class='form-control' id='search' name='search' />
+        <label>Filter by Genre:</label><br />
+        <input type='checkbox' id='pop' name='pop' value='true' />
+        <label for='pop'>Pop</label>
+        <input type='checkbox' id='rock' name='rock' value='true' />
+        <label for='rock'>Rock</label>
+        <input type='checkbox' id='alternative' name='alternative' value='true' />
+        <label for='alternative'>Alternative</label>
+        <input type='checkbox' id='metal' name='metal' value='true' />
+        <label for='metal'>Metal</label>
+        <input type='checkbox' id='jazz' name='jazz' value='true' />
+        <label for='jazz'>Jazz</label>
+        <input type='checkbox' id='disco' name='disco' value='true' />
+        <label for='disco'>Disco</label>
+        <br />
+        <label for='artistsearch'>Search by Artist</label>
+        <input class='form-control' id='artistsearch' name='artistsearch' />
+      </div>
+      <button type='submit'>Search</button>
+    </form>
     <table class='songTable'>
       <tr>
         <td class='columnLabels'>Name:</td>
@@ -74,10 +74,9 @@
           <td class='cell'>{{name}}</td>
           <td class='cell'>{{genre}}</td>
           <td class='cell'>{{artist}}</td>
-            <td class='cell'><a
-                href='/users/addtoplaylist/{{../playlistID}}/{{id}}'
-                class='btn btn-outline-info'
-              >Add to Playlist</a></td>
+          <td class='cell'>
+            <a href='/users/addtoplaylist/{{../playlistID}}/{{id}}' class='btn btn-outline-info'>Add to Playlist</a>
+          </td>
         </tr>
       {{/each}}
     </table>
