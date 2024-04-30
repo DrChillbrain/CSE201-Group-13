@@ -1,5 +1,5 @@
 <div id='mainContent'>
-  <h1>Note Dream</h1> <!-- Title above the taskbar -->
+  <h1>Note Dream</h1>
   <div class="taskbar">
     <div class="task">
       <a href='/users/login'>Log In</a>
@@ -31,37 +31,21 @@
     </div>
     <div class='form-group'>
       <label for='password'>Password</label>
-      <input
-        class='form-control'
-        id='password'
-        type='password'
-        name='password'
-      />
+      <input class='form-control' id='password' type='password' name='password' />
     </div>
     <div class='form-group'>
       <label for='passwordConf'>Password Confirmation</label>
-      <input
-        class='form-control'
-        id='passwordConf'
-        type='password'
-        name='passwordConf'
-      />
+      <input class='form-control' id='passwordConf' type='password' name='passwordConf' />
     </div>
-    <div>
+    <div class="profile-pictures">
       <input type="radio" id="photo1" name="selectedPhotoId" value="1">
-      <label for="photo1"><img src="/images/profilePicture1.jpg" alt="Profile Picture 1"></label>
-    </div>
-    <div>
+      <label for="photo1"><img src="/images/profilePicture1.jpg" alt="Profile Picture 1" class="profile-picture"></label>
       <input type="radio" id="photo2" name="selectedPhotoId" value="2">
-      <label for="photo2"><img src="/images/profilePicture2.jpg" alt="Profile Picture 2"></label>
-    </div>
-    <div>
+      <label for="photo2"><img src="/images/profilePicture2.jpg" alt="Profile Picture 2" class="profile-picture"></label>
       <input type="radio" id="photo3" name="selectedPhotoId" value="3">
-      <label for="photo3"><img src="/images/profilePicture3.jpg" alt="Profile Picture 3"></label>
-    </div>
-    <div>
+      <label for="photo3"><img src="/images/profilePicture3.jpg" alt="Profile Picture 3" class="profile-picture"></label>
       <input type="radio" id="photo4" name="selectedPhotoId" value="4">
-      <label for="photo4"><img src="/images/profilePicture4.jpg" alt="Profile Picture 4"></label>
+      <label for="photo4"><img src="/images/profilePicture4.jpg" alt="Profile Picture 4" class="profile-picture"></label>
     </div>
     <button class='btn btn-danger' type='submit'>Submit</button>
   </form>
