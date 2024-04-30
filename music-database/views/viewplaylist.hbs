@@ -1,13 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Note Dream</title>
+<link rel="stylesheet" href="style.css">
+</head>
 <body>
-  <div id='mainContent'>
-    <h1>Note Dream</h1> <!-- Title above the taskbar -->
-    <div class="taskbar">
-      <div class="task">
-        <a href='/users/register'>Sign Up</a>
-        <a href="/" class="home-link">Back to Homepage</a>
-      </div>
+<div id='mainContent'>
+  <h1>Note Dream</h1> <!-- Title above the taskbar -->
+  <div class="taskbar">
+    <div class="task">
+      <a href='/users/register'>Sign Up</a>
+      <a href="/" class="home-link">Back to Homepage</a>
     </div>
-
+  </div>
+  <div class="content">
     {{#if playlistID}}
       <h1><strong>{{playlistName}}</strong></h1>
       <p>{{description}}</p>
@@ -35,4 +42,6 @@
       </table>
     {{/if}}
   </div>
+</div>
 </body>
+</html>
