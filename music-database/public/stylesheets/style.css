@@ -409,3 +409,53 @@ hr {
   text-decoration: none;
   margin-left: 20px;
 }
+
+.current-profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.profile-pictures {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.profile-pictures label {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.profile-pictures input[type="radio"] {
+  display: none;
+}
+
+.profile-pictures input[type="radio"] + label img {
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.profile-pictures input[type="radio"]:checked + label img {
+  border-color: #333;
+}
+
+.taskbar {
+  background-color: #333;
+  padding: 10px 0;
+}
+
+.task {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 20px;
+}
