@@ -16,16 +16,25 @@
             margin-top: -15; /* Reset margin */
         }
         .navbar {
-            background-color: #343a40 !important; /* Change background color to black */
-            padding: 0.5rem 1rem !important; /* Adjust padding */
-            margin: -17;
+            background-color: #333 !important; /* Change background color to black */
+            padding: 0.25rem 1rem !important; /* Adjust padding */
+            margin: 0 !important; /* Reset margin */
             border: none !important; /* Remove border */
             box-shadow: none !important; /* Remove box shadow */
+            position: fixed; /* Make the taskbar fixed */
+            width: 100%; /* Full width */
+            z-index: 1000; /* Set z-index to ensure it's above other elements */
         }
 
         .navbar .container {
              padding: 0 !important; /* Remove padding from container */
+             
          }
+
+        .mb-4 {
+  margin-top: 40px; /* Increase margin-top to lower the title */
+}
+
 
         .nav-link {
             color: white !important; /* Change text color to white */

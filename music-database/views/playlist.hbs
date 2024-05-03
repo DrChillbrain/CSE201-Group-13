@@ -1,119 +1,160 @@
+<!DOCTYPE html>
 <html lang='en'>
-  <head>
-    <meta charset='UTF-8' />
-    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-    <title>Playlist Manager</title>
-    <link
-      href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'
-      rel='stylesheet'
-    />
-    <style>
-      body { padding-top: 60px; /* Give space for the fixed navbar */ } .navbar
-      { background-color: #000; /* Black background for the taskbar */ } .navbar
-      a, .navbar button { color: white; /* White text for contrast */ }
-      .playlistTable { width: 100%; margin-top: 20px; } .playlistTable th {
-      background-color: #000; /* Black for table headers */ color: white; /*
-      White text for readability */ } .playlistTable tr:nth-child(even) {
-      background-color: #f2f2f2; } .form-group h1 { font-size: 24px; } .alert {
-      margin-top: 20px; }
-    </style>
-  </head>
-  <body>
-    <!-- Taskbar -->
-    <div id='mainContent'>
-      <div class="taskbar">
-        <div class="task">
-        <a>Playlist Manager</a>
-      </div>
-    </div>
-    <nav class='navbar navbar-expand-lg fixed-top navbar-dark'>
-      <div class='container-fluid'>
-        <a href='/' class='navbar-brand'>Note Dream</a>
-        <div>
-          <a href='/' class='btn btn-outline-light'>Return to Home</a>
-        </div>
-      </div>
-    </nav>
+<head>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <title>Playlist Manager</title>
+  <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' rel='stylesheet' />
+  <style>
+    /* Custom styles */
+    .navbar-brand {
+      font-size: 36px; /* Increase font size */
+      color: black !important; /* Change text color to black */
+      margin-top: -50px; /* Move title higher towards the ceiling */
+      padding-left: 15px;
+    }
+    .navbar {
+      background-color: #333 !important; /* Change background color to black */
+      padding: 0.25rem 1rem !important; /* Adjust padding */
+      margin: 0 !important; /* Reset margin */
+      border: none !important; /* Remove border */
+      box-shadow: none !important; /* Remove box shadow */
+      position: fixed; /* Make the taskbar fixed */
+      width: 100%; /* Full width */
+      z-index: 1000; /* Set z-index to ensure it's above other elements */
+    }
+    .nav-link {
+      color: white !important; /* Change text color to white */
+    }
+    .btn-primary {
+      background-color: black !important; /* Change button background color to black */
+      border-color: black !important; /* Change button border color to black */
+      color: white !important; /* Change button text color to white */
+    }
+    body {
+      background-color: white; /* Set background color */
+      padding-top: 70px; /* Adjust padding to make room for the task bar */
+    }
+    .playlistTable {
+      width: 100%;
+      margin-top: 20px;
+    }
+    .playlistTable th {
+      background-color: #333; /* Black for table headers */
+      color: white; /* White text for readability */
+      font-size: 14px; /* Smaller font size */
+      font-weight: bold; /* Bold font weight */
+    }
+    .playlistTable tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    .form-group h1 {
+      font-size: 24px;
+    }
+    .form-group h2 {
+      font-size: 18px; /* Smaller font size */
+      font-weight: bold; /* Bold font weight */
+    }
+    .alert {
+      margin-top: 20px;
+    }
+    .taskbar {
+      background-color: #333; /* Black background for the taskbar */
+      padding: 0.25rem 1rem; /* Adjust padding */
+      color: white; /* White text for contrast */
+    }
+    .taskbar a {
+      color: white; /* White text for contrast */
+      margin-right: 20px; /* Add margin between elements */
+    }
+    .taskbar a.btn {
+      border: none !important; /* Remove border */
+    }
+    .taskbar a:hover {
+      text-decoration: none; /* Remove underline on hover */
+    }
+    .view-playlist-btn {
+      background-color: white !important; /* Change button background color to white */
+      color: black !important; /* Change button text color to black */
+      border-color: black !important; /* Change button border color to black */
+    }
+  </style>
+</head>
+<body>
+  <!-- Name Note Dream -->
+  <div class="container-fluid">
+    <h1 class="navbar-brand">Note Dream</h1>
+  </div>
 
+  <!-- Taskbar -->
+  <div class="taskbar">
+    <div class="container-fluid">
+      <a href="/" class="btn btn-outline-light">Back to Homepage</a> <!-- Align to the right side -->
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="container mt-5">
+    <h2 class="mb-4">Your Playlists</h2>
+    <table class="table playlistTable">
+      <thead class="thead-dark">
+        <tr>
+          <th>Name</th>
+          <th>Publicity</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each playlists}}
+        <tr>
+          <td>{{playlist_name}}</td>
+          {{#if public}}
+          <td>Public</td>
+          {{else}}
+          <td>Private</td>
+          {{/if}}
+          <td><a href='/users/viewplaylist/{{playlist_id}}' class='btn btn-outline-info view-playlist-btn'>View Playlist</a></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="container mt-5">
     <form id='playlistForm' method='post'>
       <div class='form-group'>
-        <label for='addingPlaylist'><h1><strong>Add a Playlist</strong></h1></label>
+        <label for='addingPlaylist'><h2><strong>Create a Playlist</strong></h2></label>
         <h2>Name</h2>
-        <input
-          class='form-control'
-          id='addingPlaylist'
-          name='addingPlaylist'
-          maxlength='255'
-          required
-        />
+        <input class='form-control' id='addingPlaylist' name='addingPlaylist' maxlength='255' required />
         <h2>Description</h2>
         <p>A visible description for your playlist. Max 2000 characters.</p>
-        <input
-          class='form-control'
-          id='description'
-          name='description'
-          maxlength='2000'
-        />
+        <input class='form-control' id='description' name='description' maxlength='2000' />
         <h2>Publicity</h2>
-        <p>Public playlists can be linked to and viewed by anyone. Private
-          playlists can only be viewed by you.</p>
+        <p>Public playlists can be linked to and viewed by anyone. Private playlists can only be viewed by you.</p>
         <label>
           <input id='publicity' name='publicity' type='checkbox' />
           Public
         </label>
         <br />
-        <button
-          type='submit'
-          form='playlistForm'
-          class='btn btn-outline-dark'
-        >Submit</button>
+        <button type='submit' form='playlistForm' class='btn btn-outline-dark'>Submit</button>
       </div>
     </form>
-    <!-- Assuming you're using a template engine like Handlebars -->
-    {{#each errors}}
-      <div class='alert alert-danger'>
-        {{this}}
-      </div>
-    {{/each}}
-    {{#if confirmMessage}}
-      <div class='alert alert-success'>
-        {{confirmMessage}}
-      </div>
-    {{/if}}
-    <div id='playlists'>
-      <h1><strong>Your Playlists</strong></h1>
-      <table class='table playlistTable'>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Publicity</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each playlists}}
-            <tr>
-              <td>{{playlist_name}}</td>
-              {{#if public}}
-                <td>Public</td>
-              {{else}}
-                <td>Private</td>
-              {{/if}}
-              <td><a
-                  href='/users/viewplaylist/{{playlist_id}}'
-                  class='btn btn-outline-info'
-                >View Playlist</a></td>
-            </tr>
-          {{/each}}
-        </tbody>
-      </table>
+  </div>
+
+  <!-- Assuming you're using a template engine like Handlebars -->
+  {{#each errors}}
+    <div class='alert alert-danger'>
+      {{this}}
     </div>
-    <script src='https://code.jquery.com/jquery-3.5.1.slim.min.js'></script>
-    <script
-      src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js'
-    ></script>
-    <script
-      src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'
-    ></script>
-  </body>
+  {{/each}}
+  {{#if confirmMessage}}
+    <div class='alert alert-success'>
+      {{confirmMessage}}
+    </div>
+  {{/if}}
+
+  <script src='https://code.jquery.com/jquery-3.5.1.slim.min.js'></script>
+  <script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js'></script>
+  <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
+</body>
 </html>

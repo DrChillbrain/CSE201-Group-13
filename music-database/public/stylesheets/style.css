@@ -27,9 +27,9 @@ h1 {
 
 .btn {
   display: inline-block;
-  padding: 10px 20px;
-  background-color: #e4efe8;
-  color: #5ec4d2;
+  padding: 8px 16px; /* Adjust padding to make the button smaller */
+  background-color: black;
+  color: white;
   text-decoration: none;
   border: none;
   border-radius: 4px;
@@ -120,9 +120,9 @@ h1 {
 
 #mainContent button {
   padding: 12px 24px;
-  background-color: #ffffff;
-  color: hsl(192, 72%, 71%);
-  border: 2px solid #84b7f0;
+  background-color: black;
+  color: white;
+  border: 2px solid black;
   border-radius: 4px;
   cursor: pointer;
 }
@@ -359,9 +359,9 @@ hr {
 
 .btn {
   display: inline-block;
-  padding: 10px 20px;
-  background-color: #e4efe8;
-  color: #5ec4d2;
+  padding: 8px 16px; /* Adjust padding to make the button smaller */
+  background-color: black;
+  color: white;
   text-decoration: none;
   border: none;
   border-radius: 4px;
