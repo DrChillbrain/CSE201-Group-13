@@ -270,6 +270,8 @@ router.get('/viewplaylist/:id', async (req, res) => {
   const db = await openDB();
   const playlistQuery = 'SELECT * FROM playlists WHERE playlist_id = $1';
   const playlistResults = await db.all(playlistQuery, [req.params.id]);
+  console.log('req.params.id: ' + req.params.id);
+  console.log('playlist results: ' + playlistResults);
   if (signedIn || playlistResults[0].public == true) {
     if (signedIn) {
       if (playlistResults[0].user_id == req.session.user.id) {
@@ -506,8 +508,10 @@ router.get('/editplaylist/:id', async (req, res) => {
     const db = await openDB();
     const playlistQuery = 'SELECT * FROM playlists WHERE playlist_id = $1';
     const playlistResults = await db.all(playlistQuery, [req.params.id]);
+    console.log(playlistResults);
     const songsQuery = 'SELECT * FROM songs';
     const data = await db.all(songsQuery);
+
     if (playlistResults[0].user_id == req.session.user.id) {
       //code for rendering songs already in the playlist
       const playlistSongQuery =
