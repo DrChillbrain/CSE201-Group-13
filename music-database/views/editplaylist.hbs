@@ -1,148 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Veiw Playlists</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Custom styles */
-        .navbar-brand {
-            font-size: 36px; /* Increase font size */
-            color: black !important; /* Change text color to black */
-            padding-left: -50px; /* Add padding from the left wall */
-            margin-left: -34;
-            margin-top: -15; /* Reset margin */
-        }
-        .navbar {
-            background-color: #333 !important; /* Change background color to black */
-            padding: 0.25rem 1rem !important; /* Adjust padding */
-            margin: 0 !important; /* Reset margin */
-            border: none !important; /* Remove border */
-            box-shadow: none !important; /* Remove box shadow */
-            position: fixed; /* Make the taskbar fixed */
-            width: 100%; /* Full width */
-            z-index: 1000; /* Set z-index to ensure it's above other elements */
-        }
-
-        .navbar .container {
-             padding: 0 !important; /* Remove padding from container */
-             
-         }
-
-        .mb-4 {
-  margin-top: 40px; /* Increase margin-top to lower the title */
-}
-
-
-        .nav-link {
-            color: white !important; /* Change text color to white */
-        }
-        .btn-primary {
-            background-color: black !important; /* Change button background color to black */
-            border-color: black !important; /* Change button border color to black */
-        }
-        body {
-            background-color: white; /* Set background color */
-        }
-    </style>
-</head>
-<body>
-    <!-- Note Dream -->
-    <div class="container mt-3">
-        <h1 class="navbar-brand">Note Dream</h1>
-    </div>
-
-    <!-- Taskbar -->
-    <nav class="navbar navbar-dark">
-        <div class="container">
-            <a class="nav-link ml-auto" href="/users/browse">Back to PlayList</a> <!-- Align to the right side -->
-        </div>
-    </nav>
-
-  <div class="container mt-3">
-        <h2 class="mb-4">Edit Playlists</h2>
-        <table class="table">
-            <tbody>
-  {{#each errors}}
-    <div class='alert alert-danger'>
-      {{this}}
-    </div>
-  {{/each}}
-  <h1>Editing {{playlistName}}</h1>
-  <a href='/users/viewplaylist/{{playlistID}}' class='btn btn-outline-info'>Done</a>
-  {{#if publicity}}
-    <p>{{playlistName}} is currently Public.</p>
-    <a href='/users/setprivate/{{playlistID}}' class='btn btn-outline-info'>Set to Private</a>
-  {{else}}
-    <p>{{playlistName}} is currently Private.</p>
-    <a href='/users/setpublic/{{playlistID}}' class='btn btn-outline-info'>Set to Public</a>
-  {{/if}}
-  <table class='songTable'>
-    <tr>
-      <td class='columnLabels'>Name:</td>
-      <td class='columnLabels'>Genre:</td>
-      <td class='columnLabels'>Artist:</td>
-    </tr>
-    {{#each songsInList}}
-      <tr>
-        <td class='cell'>{{name}}</td>
-        <td class='cell'>{{genre}}</td>
-        <td class='cell'>{{artist}}</td>
-        <td class='cell'>
-          <a href='/users/removefromplaylist/{{../playlistID}}/{{id}}' class='btn btn-outline-info'>Remove from Playlist</a>
-        </td>
-      </tr>
-    {{/each}}
-  </table>
-  <div id='songs'>
-    <h2>Search for Songs</h2>
-    <form method='post'>
-      <div class='form-group'>
-        <label for='search'>Search by Name</label>
-        <input class='form-control' id='search' name='search' />
-        <label>Filter by Genre:</label><br />
-        <input type='checkbox' id='pop' name='pop' value='true' />
-        <label for='pop'>Pop</label>
-        <input type='checkbox' id='rock' name='rock' value='true' />
-        <label for='rock'>Rock</label>
-        <input type='checkbox' id='alternative' name='alternative' value='true' />
-        <label for='alternative'>Alternative</label>
-        <input type='checkbox' id='metal' name='metal' value='true' />
-        <label for='metal'>Metal</label>
-        <input type='checkbox' id='jazz' name='jazz' value='true' />
-        <label for='jazz'>Jazz</label>
-        <input type='checkbox' id='disco' name='disco' value='true' />
-        <label for='disco'>Disco</label>
-        <br />
-        <label for='artistsearch'>Search by Artist</label>
-        <input class='form-control' id='artistsearch' name='artistsearch' />
+<div id='mainContent'>
+  <!-- Title above the taskbar -->
+    <h1>Note Dream</h1>
+    <!-- Title above the taskbar -->
+    <div class='taskbar'>
+      <div class='task'>
+        {{#if user}}
+          Edit Playlist
+          <a href='/users/accountSettings'>Account Settings</a>
+          <a href='/'>Home Page</a>
+        {{else}}
+          Edit Playlist
+          <a href='/users/accountSettings'>Account Settings</a>
+          <a href='/'>Home Page</a>
+        {{/if}}
       </div>
-      <button type='submit'>Search</button>
-    </form>
+    </div>
+  
+  <!-- Edit Playlist section -->
+  <div class="container mt-3">
+    {{#each errors}}
+      <div class='alert alert-danger'>
+        {{this}}
+      </div>
+    {{/each}}
+    <h2>Editing {{playlistName}}</h2>
+    <a href='/users/viewplaylist/{{playlistID}}' class='btn btn-outline-info'>Done</a>
+    {{#if publicity}}
+      <p>{{playlistName}} is currently Public.</p>
+      <a href='/users/setprivate/{{playlistID}}' class='btn btn-outline-info'>Set to Private</a>
+    {{else}}
+      <p>{{playlistName}} is currently Private.</p>
+      <a href='/users/setpublic/{{playlistID}}' class='btn btn-outline-info'>Set to Public</a>
+    {{/if}}
     <table class='songTable'>
       <tr>
         <td class='columnLabels'>Name:</td>
         <td class='columnLabels'>Genre:</td>
         <td class='columnLabels'>Artist:</td>
       </tr>
-      {{#each songs}}
+      {{#each songsInList}}
         <tr>
           <td class='cell'>{{name}}</td>
           <td class='cell'>{{genre}}</td>
           <td class='cell'>{{artist}}</td>
           <td class='cell'>
-            <a href='/users/addtoplaylist/{{../playlistID}}/{{id}}' class='btn btn-outline-info'>Add to Playlist</a>
+            <a href='/users/removefromplaylist/{{../playlistID}}/{{id}}' class='btn btn-outline-info'>Remove from Playlist</a>
           </td>
         </tr>
       {{/each}}
     </table>
-    </tbody>
-        </table>
-    </div> 
+    <div id='songs'>
+      <h2>Search for Songs</h2>
+      <form method='post'>
+        <div class='form-group'>
+          <label for='search'>Search by Name</label>
+          <input class='form-control' id='search' name='search' />
+          <label>Filter by Genre:</label><br />
+          <input type='checkbox' id='pop' name='pop' value='true' />
+          <label for='pop'>Pop</label>
+          <input type='checkbox' id='rock' name='rock' value='true' />
+          <label for='rock'>Rock</label>
+          <input type='checkbox' id='alternative' name='alternative' value='true' />
+          <label for='alternative'>Alternative</label>
+          <input type='checkbox' id='metal' name='metal' value='true' />
+          <label for='metal'>Metal</label>
+          <input type='checkbox' id='jazz' name='jazz' value='true' />
+          <label for='jazz'>Jazz</label>
+          <input type='checkbox' id='disco' name='disco' value='true' />
+          <label for='disco'>Disco</label>
+          <br />
+          <label for='artistsearch'>Search by Artist</label>
+          <input class='form-control' id='artistsearch' name='artistsearch' />
+        </div>
+        <button type='submit' class='btn btn-outline-dark'>Search</button>
+      </form>
+      <table class='songTable'>
+        <tr>
+          <td class='columnLabels'>Name:</td>
+          <td class='columnLabels'>Genre:</td>
+          <td class='columnLabels'>Artist:</td>
+        </tr>
+        {{#each songs}}
+          <tr>
+            <td class='cell'>{{name}}</td>
+            <td class='cell'>{{genre}}</td>
+            <td class='cell'>{{artist}}</td>
+            <td class='cell'>
+              <a href='/users/addtoplaylist/{{../playlistID}}/{{id}}' class='btn btn-outline-info'>Add to Playlist</a>
+            </td>
+          </tr>
+        {{/each}}
+      </table>
+    </div>
+  </div>
+</div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

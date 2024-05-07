@@ -1,78 +1,41 @@
-<html lang='en'>
-  <head>
-    <meta charset='UTF-8' />
-    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-    <title>NoteDream Playlists</title>
-    <link
-      href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'
-      rel='stylesheet'
-    />
-    <style>
-      /* Custom styles */ .navbar-brand { font-size: 36px; /* Increase font size
-      */ color: black !important; /* Change text color to black */ padding-left:
-      -50px; /* Add padding from the left wall */ margin-left: -34; margin-top:
-      -15; /* Reset margin */ } .navbar { background-color: #333 !important; /*
-      Change background color to black */ padding: 0.25rem 1rem !important; /*
-      Adjust padding */ margin: 0 !important; /* Reset margin */ border: none
-      !important; /* Remove border */ box-shadow: none !important; /* Remove box
-      shadow */ position: fixed; /* Make the taskbar fixed */ width: 100%; /*
-      Full width */ z-index: 1000; /* Set z-index to ensure it's above other
-      elements */ } .navbar .container { padding: 0 !important; /* Remove
-      padding from container */ } .mb-4 { margin-top: 40px; /* Increase
-      margin-top to lower the title */ } .nav-link { color: white !important; /*
-      Change text color to white */ } .btn-primary { background-color: black
-      !important; /* Change button background color to black */ border-color:
-      black !important; /* Change button border color to black */ } body {
-      background-color: white; /* Set background color */ }
-    </style>
-  </head>
-  <body>
-    <!-- Note Dream -->
-    <div class='container mt-3'>
-      <h1 class='navbar-brand'>Note Dream</h1>
-    </div>
-
-    <!-- Taskbar -->
-    <nav class='navbar navbar-dark'>
-      <div class='container'>
-        <a class='nav-link ml-auto' href='/'>Back to Homepage</a>
-        <!-- Align to the right side -->
+<div id='mainContent'>
+  <!-- Content -->
+    <h1>Note Dream</h1>
+    <!-- Title above the taskbar -->
+    <div class='taskbar'>
+      <div class='task'>
+        {{#if user}}
+          Public Playlists
+          <a href='/users/accountSettings'>Account Settings</a>
+          <a href='/'>Home Page</a>
+        {{else}}
+          Public Playlists
+          <a href='/users/login'>Log In</a>
+          <a href='/users/register'>Sign Up</a>
+        {{/if}}
       </div>
-    </nav>
-
-    <div class='container mt-3'>
-      <h2 class='mb-4'>Public Playlists</h2>
-      <table class='table'>
-        <thead class='thead-dark'>
-          <tr>
-            <th>Name</th>
-            <th>Created By</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each playlists}}
-            <tr>
-              <td>{{playlist_name}}</td>
-              <td>{{user_id}}</td>
-              <td><a
-                  href='/users/viewplaylist/{{playlist_id}}'
-                  class='btn btn-primary'
-                >View Playlist</a></td>
-            </tr>
-          {{/each}}
-        </tbody>
-      </table>
     </div>
 
-    <script
-      src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'
-    ></script>
-    <script
-      src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js'
-    ></script>
-    <script
-      src='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'
-    ></script>
-  </body>
-</html>
+    <!-- Add space between table and taskbar -->
+    <div style='margin-top: 40px;'></div>
+
+    <table class='table'>
+        <tr>
+          <th>Name</th>
+          <th>Created By</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each playlists}}
+        <tr>
+          <td>{{playlist_name}}</td>
+          <td>{{user_id}}</td>
+          <!-- Change button style to black and white -->
+          <td><a href='/users/viewplaylist/{{playlist_id}}' class='btn btn-outline-dark'>View Playlist</a></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>

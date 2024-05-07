@@ -1,88 +1,40 @@
-<html lang='en'>
-  <head>
-    <meta charset='UTF-8' />
-    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-    <link
-      href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'
-      rel='stylesheet'
-    />
-    <style>
-      /* Custom styles */ .navbar-brand { font-size: 36px; /* Increase font size
-      */ color: black !important; /* Change text color to black */ padding-left:
-      -50px; /* Add padding from the left wall */ margin-left: -34; margin-top:
-      -15; /* Reset margin */ } .navbar { background-color: #333 !important; /*
-      Change background color to black */ padding: 0.25rem 1rem !important; /*
-      Adjust padding */ margin: 0 !important; /* Reset margin */ border: none
-      !important; /* Remove border */ box-shadow: none !important; /* Remove box
-      shadow */ position: fixed; /* Make the taskbar fixed */ width: 100%; /*
-      Full width */ z-index: 1000; /* Set z-index to ensure it's above other
-      elements */ } .navbar .container { padding: 0 !important; /* Remove
-      padding from container */ } .mb-4 { margin-top: 40px; /* Increase
-      margin-top to lower the title */ } .nav-link { color: white !important; /*
-      Change text color to white */ } .btn-primary { background-color: black
-      !important; /* Change button background color to black */ border-color:
-      black !important; /* Change button border color to black */ } body {
-      background-color: white; /* Set background color */ }
-    </style>
-  </head>
-  <body>
-    <!-- Note Dream -->
-    <div class='container mt-3'>
-      <h1 class='navbar-brand'>Note Dream</h1>
-    </div>
-
-    <!-- Taskbar -->
-    <nav class='navbar navbar-dark'>
-      <div class='container'>
-        <a class='nav-link ml-auto' href='/users/browse'>Back to Browse</a>
-        <!-- Align to the right side -->
+<body>
+  <div id='mainContent'>
+    <h1>Note Dream</h1> <!-- Title above the taskbar -->
+    <div class="taskbar">
+      <div class="task">
+        <a href='/users/register'>Sign Up</a>
+        <a href='/users/accountSettings'>Account Settings</a>
+        <a href="/" class="home-link">Back to Homepage</a>
       </div>
-    </nav>
-
-    <div class='container mt-3'>
-      <table class='table'>
-        <tbody>
-          {{#if playlistID}}
-            <h1><strong>{{playlistName}}</strong></h1>
-            <p>{{description}}</p>
-            {{#each errors}}
-              <div class='alert alert-danger'>
-                {{this}}
-              </div>
-            {{/each}}
-            {{#if editor}}
-              <a
-                href='/users/editplaylist/{{playlistID}}'
-                class='btn btn-outline-info'
-              >Edit Playlist</a>
-            {{/if}}
-            <table class='songTable'>
-              <tr>
-                <td class='columnLabels'>Name:</td>
-                <td class='columnLabels'>Genre:</td>
-                <td class='columnLabels'>Artist:</td>
-              </tr>
-              {{#each songsInList}}
-                <tr>
-                  <td class='cell'>{{name}}</td>
-                  <td class='cell'>{{genre}}</td>
-                  <td class='cell'>{{artist}}</td>
-                </tr>
-              {{/each}}
-            </table>
-          {{/if}}
-        </tbody>
-      </table>
     </div>
 
-    <script
-      src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'
-    ></script>
-    <script
-      src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js'
-    ></script>
-    <script
-      src='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'
-    ></script>
-  </body>
-</html>
+
+    {{#if playlistID}}
+      <h2><strong>{{playlistName}}</strong></h2>
+      <p>{{description}}</p>
+      {{#each errors}}
+        <div class='alert alert-danger'>
+          {{this}}
+        </div>
+      {{/each}}
+      {{#if editor}}
+        <a href='/users/editplaylist/{{playlistID}}' class='btn btn-outline-info'>Edit Playlist</a>
+      {{/if}}
+      <table class='songTable'>
+        <tr>
+          <td class='columnLabels'>Name:</td>
+          <td class='columnLabels'>Genre:</td>
+          <td class='columnLabels'>Artist:</td>
+        </tr>
+        {{#each songsInList}}
+          <tr>
+            <td class='cell'>{{name}}</td>
+            <td class='cell'>{{genre}}</td>
+            <td class='cell'>{{artist}}</td>
+          </tr>
+        {{/each}}
+      </table>
+    {{/if}}
+  </div>
+</body>
